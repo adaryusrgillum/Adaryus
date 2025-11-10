@@ -1,5 +1,8 @@
 /* Adaryus Frontend Controller */
 const Adaryus = {
+    // ========================================
+    // State Management
+    // ========================================
     page: 'home',
     workflows: {},
     projects: [],
@@ -14,6 +17,9 @@ const Adaryus = {
     podcasts: [],
     trendTopics: [],
 
+    // ========================================
+    // Core Initialization
+    // ========================================
     init() {
         this.page = document.body.dataset.page || 'home';
         this.defineDataModels();
@@ -378,6 +384,9 @@ const Adaryus = {
         ];
     },
 
+    // ========================================
+    // DOM & Event Handling
+    // ========================================
     cacheGlobalElements() {
         this.navbar = document.getElementById('navbar');
         this.mobileToggle = document.getElementById('mobile-toggle');
@@ -567,6 +576,9 @@ const Adaryus = {
         addMessage('Hey there, need a summary of our guardrails or blueprint catalog?', 'ai', ['Welcome']);
     },
 
+    // ========================================
+    // Page-Specific Initialization
+    // ========================================
     routePageInit() {
         switch (this.page) {
             case 'news':
@@ -854,30 +866,9 @@ const Adaryus = {
         this.updateTrendList();
     },
 
-    renderSkeleton(targetId, count = 3) {
-        const container = document.getElementById(targetId);
-        if (!container) return;
-        container.innerHTML = Array.from({ length: count }, () => `
-            <article class="news-card skeleton" role="listitem" aria-busy="true">
-                <div class="skeleton-line skeleton-title"></div>
-                <div class="skeleton-line"></div>
-                <div class="skeleton-line short"></div>
-            </article>
-        `).join('');
-    },
-
-    renderEmptyState(targetId, message) {
-        const container = document.getElementById(targetId);
-        if (!container) return;
-        container.innerHTML = `<div class="empty-state">${this.escapeHtml(message)}</div>`;
-    },
-
-    renderErrorState(targetId, message) {
-        const container = document.getElementById(targetId);
-        if (!container) return;
-        container.innerHTML = `<div class="empty-state error">${this.escapeHtml(message)}</div>`;
-    },
-
+    // ========================================
+    // Data Loading & API Integration
+    // ========================================
     async loadAiDigest() {
         const endpoint = 'https://hn.algolia.com/api/v1/search_by_date?query=artificial%20intelligence%20OR%20ai%20OR%20gpt&tags=story&hitsPerPage=12';
         try {
@@ -940,6 +931,9 @@ const Adaryus = {
         }
     },
 
+    // ========================================
+    // Content Rendering Methods
+    // ========================================
     renderHeadlines() {
         const container = document.getElementById('ai-headlines');
         if (!container) return;
@@ -1194,6 +1188,9 @@ const Adaryus = {
         addMessage('<p>Ask about model launches, safety policies, or podcasts to see what’s new.</p>', 'ai');
     },
 
+    // ========================================
+    // News Search & Indexing
+    // ========================================
     answerNewsQuery(query) {
         if (!this.newsCorpus.length) {
             return '<p>I’m still collecting sources. Check back in a few seconds.</p>';
@@ -1255,6 +1252,36 @@ const Adaryus = {
         return 'Just now';
     },
 
+    // ========================================
+    // Rendering Utilities
+    // ========================================
+    renderSkeleton(targetId, count = 3) {
+        const container = document.getElementById(targetId);
+        if (!container) return;
+        container.innerHTML = Array.from({ length: count }, () => `
+            <article class="news-card skeleton" role="listitem" aria-busy="true">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line short"></div>
+            </article>
+        `).join('');
+    },
+
+    renderEmptyState(targetId, message) {
+        const container = document.getElementById(targetId);
+        if (!container) return;
+        container.innerHTML = `<div class="empty-state">${this.escapeHtml(message)}</div>`;
+    },
+
+    renderErrorState(targetId, message) {
+        const container = document.getElementById(targetId);
+        if (!container) return;
+        container.innerHTML = `<div class="empty-state error">${this.escapeHtml(message)}</div>`;
+    },
+
+    // ========================================
+    // String & Data Utilities
+    // ========================================
     truncate(text, length = 160) {
         const value = (text || '').toString().trim();
         if (value.length <= length) return value;
@@ -1344,6 +1371,9 @@ const Adaryus = {
         });
     },
 
+    // ========================================
+    // Dashboard & Charts
+    // ========================================
     async initDashboard() {
         const cards = document.querySelectorAll('[data-metric]');
         cards.forEach(card => {
