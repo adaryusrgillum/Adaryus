@@ -1,9 +1,12 @@
 # Review Requests Status
 
+> **Quick Start**: See [QUICK_GUIDE_CLOSE_REVIEWS.md](QUICK_GUIDE_CLOSE_REVIEWS.md) for step-by-step instructions.
+
 ## Summary
 This document tracks all pending review requests across open pull requests in the repository.
 
 **Last Updated**: 2025-11-10
+**Status**: 1 active review request found
 
 ## Current Review Requests
 
