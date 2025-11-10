@@ -98,6 +98,11 @@ Without any configuration the site still works using public feeds (Hacker News, 
 - Check that modal HTML structure is correct
 - Verify `data-close-modal` attribute exists
 
+## Maintenance
+
+- `REVIEW_REQUESTS.md` – documentation and status of PR review requests
+- `scripts/close_review_requests.sh` – automation script to remove pending review requests
+
 ## Questions?
 
 Email **build@adaryus.ai** for support or feature requests.
