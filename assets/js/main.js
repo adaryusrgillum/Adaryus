@@ -7,6 +7,12 @@ const Adaryus = {
     promptPlaybooks: [],
     insights: [],
     charts: [],
+    aiDigest: [],
+    modelReleasesFeed: [],
+    announcementFeed: [],
+    newsCorpus: [],
+    podcasts: [],
+    trendTopics: [],
 
     init() {
         this.page = document.body.dataset.page || 'home';
@@ -311,6 +317,65 @@ const Adaryus = {
                 code: 'if policy.requires_override(intent):\n    return escalate_with_context(intent, artifacts)'
             }
         ];
+
+        this.podcasts = [
+            {
+                title: 'Last Week in AI',
+                hosts: 'Andrey Kurenkov & Jeremie Harris',
+                description: 'Weekly recap blending research breakthroughs, policy shifts, and industry launches.',
+                link: 'https://podcasts.apple.com/us/podcast/last-week-in-ai/id1502782720',
+                cadence: 'Weekly • ~60 min'
+            },
+            {
+                title: 'This Day in AI Podcast',
+                hosts: 'Michael & Chris Sharkey',
+                description: 'Daily-style news hits on model releases, AI infrastructure, and emerging tooling.',
+                link: 'https://podcasts.apple.com/us/podcast/this-day-in-ai-podcast/id1671087656',
+                cadence: 'Multiple times weekly • ~35 min'
+            },
+            {
+                title: 'AI for Humans',
+                hosts: 'Kevin Pereira & Gavin Purcell',
+                description: 'Accessible tour through practical AI apps, with humor and hands-on demos.',
+                link: 'https://podcasts.apple.com/us/podcast/ai-for-humans-making-artificial-intelligence-fun-practical/id1682409647',
+                cadence: 'Weekly • ~55 min'
+            },
+            {
+                title: 'The Artificial Intelligence Show',
+                hosts: 'Paul Roetzer & Mike Kaput',
+                description: 'Marketing and business leaders decode AI strategy, governance, and adoption.',
+                link: 'https://podcasts.apple.com/us/podcast/the-artificial-intelligence-show/id1548733275',
+                cadence: 'Weekly • ~45 min'
+            },
+            {
+                title: 'Everyday AI Podcast',
+                hosts: 'Jordan Wilson',
+                description: 'Daily practical walkthroughs on using AI workflows inside careers and companies.',
+                link: 'https://podcasts.apple.com/us/podcast/everyday-ai-podcast-an-ai-and-chatgpt-podcast/id1683401861',
+                cadence: 'Daily • ~20 min'
+            },
+            {
+                title: 'Latent Space: The AI Engineer Podcast',
+                hosts: 'Alessio Fanelli & swyx',
+                description: 'Deep dives with builders shaping the AI stack, from infra to agent frameworks.',
+                link: 'https://podcasts.apple.com/us/podcast/latent-space-the-ai-engineer-podcast/id1674008350',
+                cadence: 'Weekly • ~70 min'
+            },
+            {
+                title: 'AI Today Podcast',
+                hosts: 'Kathleen Walch & Ron Schmelzer',
+                description: 'Enterprise leaders explore AI governance, ROI measurement, and real-world deployments.',
+                link: 'https://podcasts.apple.com/us/podcast/ai-today-podcast/id1279927057',
+                cadence: 'Weekly • ~40 min'
+            },
+            {
+                title: 'The Next Wave: AI and the Future of Technology',
+                hosts: 'Matt Wolfe & Nathan Lands',
+                description: 'Forward-looking takes on AI acceleration, creative use cases, and platform roadmaps.',
+                link: 'https://podcasts.apple.com/us/podcast/the-next-wave-ai-and-the-future-of-technology/id1738550343',
+                cadence: 'Weekly • ~50 min'
+            }
+        ];
     },
 
     cacheGlobalElements() {
@@ -504,6 +569,9 @@ const Adaryus = {
 
     routePageInit() {
         switch (this.page) {
+            case 'news':
+                this.initNews();
+                break;
             case 'home':
                 this.initHome();
                 break;
@@ -755,6 +823,459 @@ const Adaryus = {
         });
 
         render();
+    },
+
+    async initNews() {
+        this.aiDigest = [];
+        this.modelReleasesFeed = [];
+        this.announcementFeed = [];
+        this.newsCorpus = [];
+        this.trendTopics = [];
+
+        this.renderSkeleton('ai-headlines', 6);
+        this.renderSkeleton('model-release-grid', 6);
+        this.renderSkeleton('announcement-grid', 6);
+
+        this.renderPodcasts();
+        this.initNewsChat();
+
+        const jobs = [
+            this.loadAiDigest(),
+            this.loadModelReleases(),
+            this.loadAnnouncements()
+        ];
+
+        const apiKey = window.AdaryusConfig && window.AdaryusConfig.newsApiKey;
+        if (apiKey) {
+            jobs.push(this.loadOptionalNewsApi(apiKey));
+        }
+
+        await Promise.allSettled(jobs);
+        this.updateTrendList();
+    },
+
+    renderSkeleton(targetId, count = 3) {
+        const container = document.getElementById(targetId);
+        if (!container) return;
+        container.innerHTML = Array.from({ length: count }, () => `
+            <article class="news-card skeleton" role="listitem" aria-busy="true">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line"></div>
+                <div class="skeleton-line short"></div>
+            </article>
+        `).join('');
+    },
+
+    renderEmptyState(targetId, message) {
+        const container = document.getElementById(targetId);
+        if (!container) return;
+        container.innerHTML = `<div class="empty-state">${this.escapeHtml(message)}</div>`;
+    },
+
+    renderErrorState(targetId, message) {
+        const container = document.getElementById(targetId);
+        if (!container) return;
+        container.innerHTML = `<div class="empty-state error">${this.escapeHtml(message)}</div>`;
+    },
+
+    async loadAiDigest() {
+        const endpoint = 'https://hn.algolia.com/api/v1/search_by_date?query=artificial%20intelligence%20OR%20ai%20OR%20gpt&tags=story&hitsPerPage=12';
+        try {
+            const response = await fetch(endpoint);
+            if (!response.ok) throw new Error(`Hacker News response ${response.status}`);
+            const payload = await response.json();
+            const hits = Array.isArray(payload?.hits) ? payload.hits : [];
+            this.aiDigest = hits.map(hit => {
+                const title = hit.title || hit.story_title || 'Untitled update';
+                const fallbackUrl = `https://news.ycombinator.com/item?id=${hit.objectID}`;
+                const url = hit.url || hit.story_url || fallbackUrl;
+                const body = hit.story_text || hit.comment_text || '';
+                const summary = body ? this.truncate(this.stripHtml(body.replace(/\s+/g, ' ')), 180) : 'Community discussion on Hacker News.';
+                const entry = {
+                    title,
+                    summary,
+                    url,
+                    source: 'Hacker News',
+                    date: hit.created_at
+                };
+                this.indexNewsItem(entry);
+                return entry;
+            }).filter(item => Boolean(item.url));
+            if (!this.aiDigest.length) {
+                this.renderEmptyState('ai-headlines', 'No community headlines yet. Check back soon.');
+                return;
+            }
+            this.aiDigest.sort((a, b) => new Date(b.date) - new Date(a.date));
+            this.renderHeadlines();
+        } catch (error) {
+            console.error('AI digest error', error);
+            this.renderErrorState('ai-headlines', 'Unable to load community headlines right now.');
+        }
+    },
+
+    async loadOptionalNewsApi(apiKey) {
+        const endpoint = 'https://newsapi.org/v2/everything?q=artificial%20intelligence%20OR%20machine%20learning&language=en&pageSize=10&sortBy=publishedAt';
+        try {
+            const response = await fetch(endpoint, { headers: { 'X-Api-Key': apiKey } });
+            if (!response.ok) throw new Error(`NewsAPI responded ${response.status}`);
+            const payload = await response.json();
+            const articles = Array.isArray(payload?.articles) ? payload.articles : [];
+            articles.forEach(article => {
+                if (!article?.url) return;
+                if (this.aiDigest.some(existing => existing.url === article.url)) return;
+                const entry = {
+                    title: article.title || 'AI headline',
+                    summary: this.truncate(article.description || article.content || '', 200),
+                    url: article.url,
+                    source: article.source?.name || 'NewsAPI',
+                    date: article.publishedAt || new Date().toISOString()
+                };
+                this.aiDigest.push(entry);
+                this.indexNewsItem(entry);
+            });
+            this.aiDigest.sort((a, b) => new Date(b.date) - new Date(a.date));
+            this.renderHeadlines();
+        } catch (error) {
+            console.warn('NewsAPI fetch skipped', error);
+        }
+    },
+
+    renderHeadlines() {
+        const container = document.getElementById('ai-headlines');
+        if (!container) return;
+        if (!this.aiDigest.length) {
+            this.renderEmptyState('ai-headlines', 'No AI headlines found right now.');
+            return;
+        }
+        container.innerHTML = this.aiDigest.slice(0, 12).map(item => `
+            <article class="news-card" role="listitem">
+                <h3><a href="${item.url}" target="_blank" rel="noopener">${this.escapeHtml(item.title)}</a></h3>
+                <p>${this.escapeHtml(item.summary)}</p>
+                <div class="news-card-meta">
+                    <span class="badge badge-source">${this.escapeHtml(item.source)}</span>
+                    <time datetime="${item.date}">${this.formatRelativeTime(item.date)}</time>
+                </div>
+            </article>
+        `).join('');
+        this.updateTrendList();
+    },
+
+    async loadModelReleases() {
+        const endpoint = 'https://huggingface.co/api/models?limit=12&sort=lastModified&direction=-1';
+        try {
+            const response = await fetch(endpoint);
+            if (!response.ok) throw new Error(`Hugging Face response ${response.status}`);
+            const payload = await response.json();
+            const models = Array.isArray(payload) ? payload : [];
+            this.modelReleasesFeed = models.map(model => {
+                const id = model.modelId || model.id;
+                if (!id) return null;
+                const tags = Array.isArray(model.tags) ? model.tags.slice(0, 4) : [];
+                const entry = {
+                    title: id,
+                    summary: model.pipeline_tag ? `Pipeline: ${model.pipeline_tag}` : (model.tags?.length ? `Tags: ${model.tags.slice(0, 3).join(', ')}` : 'New model release on Hugging Face.'),
+                    url: `https://huggingface.co/${id}`,
+                    source: 'Hugging Face',
+                    date: model.lastModified || model.lastModifiedAt || model.last_modified || new Date().toISOString(),
+                    likes: typeof model.likes === 'number' ? model.likes : 0,
+                    downloads: typeof model.downloads === 'number' ? model.downloads : 0,
+                    tags
+                };
+                this.indexNewsItem(entry);
+                return entry;
+            }).filter(Boolean);
+            if (!this.modelReleasesFeed.length) {
+                this.renderEmptyState('model-release-grid', 'No recent model releases detected.');
+                return;
+            }
+            this.modelReleasesFeed.sort((a, b) => new Date(b.date) - new Date(a.date));
+            this.renderModelReleases();
+        } catch (error) {
+            console.error('Model release error', error);
+            this.renderErrorState('model-release-grid', 'Unable to sync Hugging Face releases right now.');
+        }
+    },
+
+    renderModelReleases() {
+        const container = document.getElementById('model-release-grid');
+        if (!container) return;
+        if (!this.modelReleasesFeed.length) {
+            this.renderEmptyState('model-release-grid', 'No recent model releases detected.');
+            return;
+        }
+        container.innerHTML = this.modelReleasesFeed.map(item => `
+            <article class="news-card" role="listitem">
+                <h3><a href="${item.url}" target="_blank" rel="noopener">${this.escapeHtml(item.title)}</a></h3>
+                <p>${this.escapeHtml(item.summary)}</p>
+                ${item.tags.length ? `<ul class="news-card-tags">${item.tags.map(tag => `<li>${this.escapeHtml(tag)}</li>`).join('')}</ul>` : ''}
+                <div class="news-card-meta">
+                    <span class="badge badge-source">${this.escapeHtml(item.source)}</span>
+                    <time datetime="${item.date}">${this.formatRelativeTime(item.date)}</time>
+                </div>
+                <div class="news-card-stats">
+                    <span aria-label="Model likes">❤️ ${item.likes}</span>
+                    <span aria-label="Model downloads">⬇️ ${item.downloads}</span>
+                </div>
+            </article>
+        `).join('');
+        this.updateTrendList();
+    },
+
+    async loadAnnouncements() {
+        const defaults = [
+            'https://openai.com/blog/rss/',
+            'https://www.anthropic.com/index.xml',
+            'https://huggingface.co/blog/feed?type=blog'
+        ];
+        const feeds = (window.AdaryusConfig && Array.isArray(window.AdaryusConfig.rssFeeds) && window.AdaryusConfig.rssFeeds.length)
+            ? window.AdaryusConfig.rssFeeds
+            : defaults;
+        const tasks = feeds.map(url => this.fetchRssFeed(url));
+        const results = await Promise.allSettled(tasks);
+        if (!this.announcementFeed.length) {
+            const failed = results.every(result => result.status === 'rejected');
+            if (failed) {
+                this.renderErrorState('announcement-grid', 'Could not reach announcement feeds. Try again soon.');
+            } else {
+                this.renderEmptyState('announcement-grid', 'No announcements released yet today.');
+            }
+            return;
+        }
+        this.announcementFeed.sort((a, b) => new Date(b.date) - new Date(a.date));
+        this.renderAnnouncements();
+    },
+
+    async fetchRssFeed(url) {
+        const label = (() => {
+            try {
+                return new URL(url).hostname.replace('www.', '');
+            } catch (error) {
+                console.warn('Unable to parse RSS host', error);
+                return 'AI Source';
+            }
+        })();
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const response = await fetch(proxyUrl);
+        if (!response.ok) throw new Error(`RSS proxy error ${response.status}`);
+        const payload = await response.json();
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(payload.contents, 'text/xml');
+        const items = Array.from(xml.querySelectorAll('item, entry')).slice(0, 8);
+        items.forEach(node => {
+            const title = node.querySelector('title')?.textContent?.trim() || 'Untitled announcement';
+            const linkNode = node.querySelector('link');
+            const linkAttr = linkNode?.getAttribute('href');
+            const linkText = linkNode?.textContent?.trim();
+            const link = linkAttr || linkText || url;
+            const description = node.querySelector('description, summary, content')?.textContent || '';
+            const pubDate = node.querySelector('pubDate, updated, published')?.textContent || new Date().toISOString();
+            const entry = {
+                title,
+                summary: this.truncate(this.stripHtml(description), 200),
+                url: link,
+                source: label,
+                date: pubDate
+            };
+            this.announcementFeed.push(entry);
+            this.indexNewsItem(entry);
+        });
+    },
+
+    renderAnnouncements() {
+        const container = document.getElementById('announcement-grid');
+        if (!container) return;
+        if (!this.announcementFeed.length) {
+            this.renderEmptyState('announcement-grid', 'No announcements yet.');
+            return;
+        }
+        container.innerHTML = this.announcementFeed.slice(0, 12).map(item => `
+            <article class="news-card" role="listitem">
+                <h3><a href="${item.url}" target="_blank" rel="noopener">${this.escapeHtml(item.title)}</a></h3>
+                <p>${this.escapeHtml(item.summary)}</p>
+                <div class="news-card-meta">
+                    <span class="badge badge-source">${this.escapeHtml(item.source)}</span>
+                    <time datetime="${item.date}">${this.formatRelativeTime(item.date)}</time>
+                </div>
+            </article>
+        `).join('');
+        this.updateTrendList();
+    },
+
+    renderPodcasts() {
+        const container = document.getElementById('podcast-grid');
+        if (!container) return;
+        container.innerHTML = this.podcasts.map(podcast => {
+            this.indexNewsItem({
+                title: podcast.title,
+                summary: podcast.description,
+                url: podcast.link,
+                source: podcast.hosts,
+                date: new Date().toISOString()
+            });
+            return `
+            <article class="news-card" role="listitem">
+                <h3><a href="${podcast.link}" target="_blank" rel="noopener">${this.escapeHtml(podcast.title)}</a></h3>
+                <p>${this.escapeHtml(podcast.description)}</p>
+                <div class="news-card-meta">
+                    <span class="badge badge-source">${this.escapeHtml(podcast.hosts)}</span>
+                    <span>${this.escapeHtml(podcast.cadence)}</span>
+                </div>
+            </article>
+        `;
+        }).join('');
+    },
+
+    updateTrendList() {
+        const list = document.getElementById('ai-trend-list');
+        if (!list) return;
+        const combined = [...this.aiDigest, ...this.announcementFeed, ...this.modelReleasesFeed]
+            .filter(item => item && item.date)
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+        if (!combined.length) {
+            list.innerHTML = '<li>Waiting for fresh signals…</li>';
+            return;
+        }
+        const top = combined.slice(0, 5);
+        list.innerHTML = top.map(item => `
+            <li>
+                <a href="${item.url}" target="_blank" rel="noopener">${this.escapeHtml(item.title)}</a>
+                <span>${this.escapeHtml(item.source)} • ${this.formatRelativeTime(item.date)}</span>
+            </li>
+        `).join('');
+    },
+
+    initNewsChat() {
+        const form = document.getElementById('ai-news-chat-form');
+        const input = document.getElementById('ai-news-chat-input');
+        const log = document.getElementById('ai-news-chat-log');
+        if (!form || !input || !log) return;
+
+        const webhook = window.AdaryusConfig && window.AdaryusConfig.chatWebhookUrl;
+
+        const addMessage = (html, role) => {
+            const bubble = document.createElement('div');
+            bubble.className = `chat-message ${role}`;
+            bubble.innerHTML = html;
+            log.appendChild(bubble);
+            log.scrollTop = log.scrollHeight;
+        };
+
+        const handleQuery = async query => {
+            if (webhook) {
+                try {
+                    const response = await fetch(webhook, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ query })
+                    });
+                    if (response.ok) {
+                        const payload = await response.json();
+                        if (payload && payload.answer) {
+                            addMessage(`<p>${this.escapeHtml(payload.answer)}</p>`, 'ai');
+                            return;
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Chat webhook unavailable', error);
+                }
+            }
+            addMessage(this.answerNewsQuery(query), 'ai');
+        };
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            const query = input.value.trim();
+            if (!query) return;
+            addMessage(`<p>${this.escapeHtml(query)}</p>`, 'user');
+            input.value = '';
+            handleQuery(query);
+        });
+
+        addMessage('<p>Ask about model launches, safety policies, or podcasts to see what’s new.</p>', 'ai');
+    },
+
+    answerNewsQuery(query) {
+        if (!this.newsCorpus.length) {
+            return '<p>I’m still collecting sources. Check back in a few seconds.</p>';
+        }
+        const tokens = query.toLowerCase().split(/\W+/).filter(Boolean);
+        const scored = this.newsCorpus.map(item => {
+            const score = tokens.reduce((total, token) => total + (item.text.includes(token) ? 1 : 0), 0);
+            return { item, score };
+        }).filter(entry => entry.score > 0)
+            .sort((a, b) => {
+                if (b.score !== a.score) return b.score - a.score;
+                return new Date(b.item.date) - new Date(a.item.date);
+            });
+        const matches = scored.slice(0, 3).map(entry => entry.item);
+        if (!matches.length) {
+            return '<p>I didn’t find a direct match yet. Try keywords like <strong>Claude</strong>, <strong>Hugging Face</strong>, or <strong>eval</strong>.</p>';
+        }
+        const items = matches.map(match => `
+            <li>
+                <a href="${match.url}" target="_blank" rel="noopener">${this.escapeHtml(match.title)}</a>
+                <span>${this.escapeHtml(match.source)} • ${this.formatRelativeTime(match.date)}</span>
+                <p>${this.escapeHtml(match.summary)}</p>
+            </li>
+        `).join('');
+        const remainder = Math.max(0, this.newsCorpus.length - matches.length);
+        const tail = remainder ? `<p>I’m tracking ${remainder} more updates today. Narrow the query for deeper links.</p>` : '';
+        return `<p>Here’s what surfaced:</p><ul class="chat-results">${items}</ul>${tail}`;
+    },
+
+    indexNewsItem(item) {
+        if (!item || !item.url) return;
+        if (this.newsCorpus.some(entry => entry.url === item.url)) return;
+        this.newsCorpus.push({
+            ...item,
+            text: `${item.title} ${item.summary} ${item.source}`.toLowerCase()
+        });
+    },
+
+    formatRelativeTime(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return value || 'Just now';
+        const diff = Date.now() - date.getTime();
+        const tense = diff >= 0 ? 'ago' : 'from now';
+        const seconds = Math.abs(diff) / 1000;
+        const intervals = [
+            { label: 'year', seconds: 31536000 },
+            { label: 'month', seconds: 2592000 },
+            { label: 'week', seconds: 604800 },
+            { label: 'day', seconds: 86400 },
+            { label: 'hour', seconds: 3600 },
+            { label: 'minute', seconds: 60 }
+        ];
+        for (const interval of intervals) {
+            const count = Math.floor(seconds / interval.seconds);
+            if (count >= 1) {
+                return `${count} ${interval.label}${count > 1 ? 's' : ''} ${tense}`;
+            }
+        }
+        return 'Just now';
+    },
+
+    truncate(text, length = 160) {
+        const value = (text || '').toString().trim();
+        if (value.length <= length) return value;
+        const truncated = value.slice(0, length);
+        return `${truncated.replace(/\s+\S*$/, '')}…`;
+    },
+
+    stripHtml(html) {
+        if (!html) return '';
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || '';
+    },
+
+    escapeHtml(text) {
+        return String(text ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
     },
 
     initPrompts() {

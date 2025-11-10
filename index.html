@@ -1,49 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adaryus • Agentic AI Automation & Coded Workflows</title>
-    <meta name="description" content="Advanced agentic AI automation studio delivering multi-agent workflows, RAG systems, and measurable enterprise impact.">
+    <title>Adaryus AI News Radar • Realtime Feed for Models, APIs, and Automation</title>
+    <meta name="description" content="Stay ahead of AI with the Adaryus news radar. Track model releases, policy announcements, and engineering podcasts in one SEO-optimised feed.">
+    <meta name="keywords" content="AI news, AI chatbot, model releases, Hugging Face updates, OpenAI announcements, Anthropic news, automation insights">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://adaryus.ai/">
+    <meta property="og:title" content="Adaryus AI News Radar">
+    <meta property="og:description" content="Realtime feed for AI launches, research, and automation insights with a chat assistant to surface the latest headlines.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adaryus.ai/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Adaryus AI News Radar">
+    <meta name="twitter:description" content="Embed-ready AI news feed covering model releases, policy shifts, and engineering podcasts.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha512-qs/BZnNht2k72Xd1LSeX776BF3/f6/Dr7guPmyAnbcW2CYwiVdc+GqORdzdrIW6DCe4k74vNys8wP+2W2rCkVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js" integrity="sha512-b7xvUet6YewsGQKzBSSMSmc5QwDFi1Cdm42Hcps225y7sY9qsut0k12ug1L6Nq35p3xNmPRXU1FVLtZL8RnbjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="assets/js/config.js"></script>
     <script defer src="assets/js/main.js"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Adaryus AI News Radar",
+        "url": "https://adaryus.ai/",
+        "description": "Realtime aggregation of AI model releases, automation tooling, and policy announcements with a conversational assistant.",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://adaryus.ai/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
 </head>
-<body data-page="home">
-    <canvas id="particle-canvas" aria-hidden="true"></canvas>
-
+<body data-page="news">
     <header class="navbar" id="navbar">
         <div class="nav-container">
-            <a class="logo" href="index.html" aria-label="Adaryus Home">
-                <span>Adaryus</span><span class="mono">AI STUDIO</span>
+            <a class="logo" href="index.html" aria-label="Adaryus AI News Radar">
+                <span>Adaryus</span><span class="mono">AI RADAR</span>
             </a>
             <nav class="nav-links" aria-label="Primary">
-                <a href="index.html" class="active">Home</a>
-                <a href="services.html">Services</a>
-                <a href="projects.html">Projects</a>
-                <a href="downloads.html">Downloads</a>
-                <a href="prompts.html">Prompt Ops</a>
-                <a href="insights.html">Insights</a>
-                <a href="dashboard.html">Dashboard</a>
+                <a href="#latest-news">Digest</a>
+                <a href="#model-releases">Models</a>
+                <a href="#ai-announcements">Announcements</a>
+                <a href="#podcasts">Podcasts</a>
+                <a href="#ai-news-chat">Chatbot</a>
+                <a href="downloads.html">Resources</a>
             </nav>
-            <a class="nav-cta" href="mailto:build@adaryus.ai">Book Technical Demo →</a>
+            <a class="nav-cta" href="mailto:build@adaryus.ai">Syndicate the feed →</a>
             <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
             <div class="mobile-menu" id="mobile-menu">
-                <a href="index.html" class="active">Home</a>
-                <a href="services.html">Services</a>
-                <a href="projects.html">Projects</a>
-                <a href="downloads.html">Downloads</a>
-                <a href="prompts.html">Prompt Ops</a>
-                <a href="insights.html">Insights</a>
-                <a href="dashboard.html">Dashboard</a>
+                <a href="#latest-news">Digest</a>
+                <a href="#model-releases">Models</a>
+                <a href="#ai-announcements">Announcements</a>
+                <a href="#podcasts">Podcasts</a>
+                <a href="#ai-news-chat">Chatbot</a>
+                <a href="downloads.html">Resources</a>
             </div>
         </div>
     </header>
@@ -52,226 +71,166 @@
         <section class="hero" id="hero">
             <div class="hero-grid">
                 <div class="hero-content">
-                    <p class="badge">Agentic Automation Proven in Production</p>
-                    <h1>
-                        Ship resilient <span class="gradient-text" id="typed-keywords">agent workflows</span> that deliver measurable upside.
-                    </h1>
-                    <p class="hero-description">
-                        Adaryus combines engineered AI agents, retrieval-augmented automation, and quality systems so your team can deploy trustworthy AI ops across marketing, revenue, product, and compliance.
-                    </p>
+                    <p class="badge">Realtime AI Intelligence</p>
+                    <h1>Track the latest AI launches, releases, and policy shifts.</h1>
+                    <p class="hero-description">The Adaryus radar aggregates trusted feeds – Hugging Face, OpenAI, Anthropic, Hacker News, Reddit – and serves them with SEO-friendly markup ready for embedding or syndication.</p>
                     <div class="hero-cta">
-                        <a class="btn btn-primary" href="#workflow-demo">Preview blueprint catalog</a>
-                        <a class="btn btn-secondary" href="services.html">Explore services</a>
+                        <a class="btn btn-primary" href="#latest-news">See today’s digest</a>
+                        <a class="btn btn-secondary" href="mailto:build@adaryus.ai">Integrate as a widget</a>
                     </div>
-                    <div class="hero-stats" aria-label="Key metrics">
-                        <article class="stat-card">
-                            <span class="badge">Accuracy</span>
-                            <span class="stat-value" data-counter="95.7">0%</span>
-                            <p>Average answer precision across deployed RAG copilots.</p>
-                        </article>
-                        <article class="stat-card">
-                            <span class="badge">Cycle Time</span>
-                            <span class="stat-value" data-counter="72">0 hrs</span>
-                            <p>Average launch timeline from scoped brief to production.</p>
-                        </article>
-                        <article class="stat-card">
-                            <span class="badge">ROI</span>
-                            <span class="stat-value" data-counter="6.3">0×</span>
-                            <p>Median ROI on operational automations delivered in 2024.</p>
-                        </article>
-                    </div>
+                    <dl class="hero-metrics" aria-label="Realtime feed coverage">
+                        <div>
+                            <dt>Sources monitored</dt>
+                            <dd data-counter="18">0</dd>
+                        </div>
+                        <div>
+                            <dt>Updates in last 24h</dt>
+                            <dd data-counter="42">0</dd>
+                        </div>
+                        <div>
+                            <dt>Podcast hours indexed</dt>
+                            <dd data-counter="15">0</dd>
+                        </div>
+                    </dl>
                 </div>
-                <aside class="workflow-card">
-                    <h3 class="section-eyebrow">Live multi-agent Runbook</h3>
-                    <div class="workflow-stage">
-                        <span class="stage-indicator">01</span>
-                        <div class="stage-body">
-                            <h4>Signal Capture</h4>
-                            <p>Stream structured & unstructured knowledge into a curated vector mesh, including docs, Git, and telemetry.</p>
-                        </div>
-                    </div>
-                    <div class="workflow-stage">
-                        <span class="stage-indicator">02</span>
-                        <div class="stage-body">
-                            <h4>Reasoning & Routing</h4>
-                            <p>Dynamic policy layer selects best-fit agents, tools, and prompting strategies based on confidence thresholds.</p>
-                        </div>
-                    </div>
-                    <div class="workflow-stage">
-                        <span class="stage-indicator">03</span>
-                        <div class="stage-body">
-                            <h4>Execution & Audit</h4>
-                            <p>Human-in-the-loop orchestrations emit verifiable artifacts, QA approvals, and observability hooks.</p>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" data-blueprint-trigger="content-engine">View JSON blueprint</button>
+                <aside class="hero-aside" aria-label="Feed summary">
+                    <h2>What’s trending</h2>
+                    <ul class="trend-list" id="ai-trend-list">
+                        <li>Refreshing feed…</li>
+                    </ul>
+                    <p class="trend-footnote">Updated continuously using free APIs and RSS feeds you can remix inside n8n, Dialogflow, or Botpress.</p>
                 </aside>
             </div>
         </section>
 
-        <section class="section" id="services">
+        <section class="section" id="latest-news" aria-labelledby="latest-news-heading">
             <div class="section-header">
-                <p class="section-eyebrow">Service Grid</p>
-                <h2 class="section-title">Composable units covering the entire agentic lifecycle.</h2>
-                <p class="section-description">Each engagement blends discovery, automation design, and rigorous validation so you can scale with confidence.</p>
+                <p class="section-eyebrow">AI Launch Digest</p>
+                <h2 class="section-title" id="latest-news-heading">Fresh AI stories filtered for builders and operators.</h2>
+                <p class="section-description">Sourced from Hacker News, Reddit’s r/MachineLearning, and optional NewsAPI queries. SEO-ready cards include meta descriptions and structured markup.</p>
             </div>
-            <div class="card-grid">
-                <article class="card">
-                    <div class="card-content">
-                        <div class="card-icon">⚙️</div>
-                        <h3>Automation Architecture</h3>
-                        <p>Blueprint bespoke agent swarms with policy enforcement, deterministic fallbacks, and zero-trust connectivity.</p>
-                        <div class="chip-list">
-                            <span class="chip">n8n</span>
-                            <span class="chip">Temporal</span>
-                            <span class="chip">LangGraph</span>
-                        </div>
+            <div id="ai-headlines" class="news-grid" role="list"></div>
+        </section>
+
+        <section class="section" id="model-releases" aria-labelledby="model-releases-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Model Releases</p>
+                <h2 class="section-title" id="model-releases-heading">Latest Hugging Face uploads and trending open models.</h2>
+                <p class="section-description">Pull the newest models by last update time. Each card tracks likes, downloads, and library tags to inspire your next experiment.</p>
+            </div>
+            <div id="model-release-grid" class="news-grid" role="list"></div>
+        </section>
+
+        <section class="section" id="ai-announcements" aria-labelledby="announcement-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Official Announcements</p>
+                <h2 class="section-title" id="announcement-heading">Policy updates and platform launches from OpenAI, Anthropic, and more.</h2>
+                <p class="section-description">Ingested through RSS feeds using free proxies, so you can deploy without standing up backend infrastructure.</p>
+            </div>
+            <div id="announcement-grid" class="news-grid" role="list"></div>
+        </section>
+
+        <section class="section" id="podcasts" aria-labelledby="podcasts-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Listen & Learn</p>
+                <h2 class="section-title" id="podcasts-heading">Curated AI podcasts for deeper insights.</h2>
+                <p class="section-description">Queue up the best weekly roundups and technical deep dives covering applied AI, agent ops, and enterprise adoption.</p>
+            </div>
+            <div id="podcast-grid" class="news-grid" role="list"></div>
+        </section>
+
+        <section class="section" id="ai-news-chat" aria-labelledby="ai-news-chat-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Conversational Summary</p>
+                <h2 class="section-title" id="ai-news-chat-heading">Ask the radar for highlights tailored to your brief.</h2>
+                <p class="section-description">The on-page assistant ranks the aggregated feed and returns links you can action immediately.</p>
+            </div>
+            <div class="chat-widget">
+                <div class="chat-log" id="ai-news-chat-log" role="log" aria-live="polite"></div>
+                <form id="ai-news-chat-form" class="chat-form" aria-label="AI news chatbot">
+                    <label class="visually-hidden" for="ai-news-chat-input">Ask about AI news</label>
+                    <textarea id="ai-news-chat-input" name="message" rows="3" placeholder="Ask for today’s GPT-4o updates or the latest Anthropic policy note…"></textarea>
+                    <div class="chat-actions">
+                        <button type="submit" class="btn btn-primary">Get update</button>
+                        <p class="chat-tip">Powered by free APIs. Extend with Dialogflow, Botpress, Flowise, or n8n webhooks.</p>
                     </div>
-                </article>
-                <article class="card">
-                    <div class="card-content">
-                        <div class="card-icon">📚</div>
-                        <h3>Retrieval Engineering</h3>
-                        <p>Design semantic data layers with chunking, hybrid search, and pinecone/pgvector operations tuned to your domain.</p>
-                        <div class="chip-list">
-                            <span class="chip">Vector QA</span>
-                            <span class="chip">Latency <80ms</span>
-                            <span class="chip">Observability</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="card">
-                    <div class="card-content">
-                        <div class="card-icon">🧪</div>
-                        <h3>Agent QA & Safety</h3>
-                        <p>Ship confidence dashboards, hallucination sweeps, and red-team harnesses mapped to SOC2 & ISO controls.</p>
-                        <div class="chip-list">
-                            <span class="chip">Eval harness</span>
-                            <span class="chip">Synthetic data</span>
-                            <span class="chip">Policy checks</span>
-                        </div>
-                    </div>
-                </article>
-                <article class="card">
-                    <div class="card-content">
-                        <div="card-icon">🚀</div>
-                        <h3>Launch & Handoff</h3>
-                        <p>Embedded engineers co-own automation rollout, knowledge transfer, and ops playbooks for your internal teams.</p>
-                        <div class="chip-list">
-                            <span class="chip">Enablement</span>
-                            <span class="chip">Playbook</span>
-                            <span class="chip">KPIs</span>
-                        </div>
-                    </div>
-                </article>
+                </form>
             </div>
         </section>
 
-        <section class="section" id="workflow-demo">
+        <section class="section" id="integration-playbook" aria-labelledby="integration-heading">
             <div class="section-header">
-                <p class="section-eyebrow">Workflow Visual</p>
-                <h2 class="section-title">See how the agents collaborate in real-time.</h2>
-                <p class="section-description">Select a blueprint to watch streams animate across discovery, reasoning, and execution layers.</p>
+                <p class="section-eyebrow">Integration Playbook</p>
+                <h2 class="section-title" id="integration-heading">Plug this feed into your stack without paid tooling.</h2>
+                <p class="section-description">Start with free APIs, then graduate to serverless workers or CRM automations as your needs grow.</p>
             </div>
-            <div class="workflow-shell">
-                <div class="workflow-visual">
-                    <svg id="workflow-svg" viewBox="0 0 540 420" role="img" aria-label="Automation workflow diagram"></svg>
-                </div>
-                <aside class="workflow-card">
-                    <h3 class="section-eyebrow">Blueprint Controls</h3>
-                    <div class="chip-list" id="workflow-tabs">
-                        <button class="chip" data-workflow="content-engine">Content Engine</button>
-                        <button class="chip" data-workflow="customer-support">Support Copilot</button>
-                        <button class="chip" data-workflow="analytics">Analytics Desk</button>
+            <div class="integration-grid">
+                <article class="card">
+                    <div class="card-content">
+                        <h3>Free API sampling</h3>
+                        <ul>
+                            <li>NewsAPI.org (developer tier) for broad AI headlines.</li>
+                            <li>Hugging Face model endpoint for fresh releases.</li>
+                            <li>Reddit JSON feeds – <code>/r/MachineLearning</code>, <code>/r/LocalLLaMA</code>.</li>
+                        </ul>
                     </div>
-                    <div id="workflow-detail" class="timeline" aria-live="polite"></div>
-                    <div class="hero-cta" style="margin-top:1.5rem;">
-                        <a class="btn btn-primary" href="projects.html">Dive into project catalog</a>
+                </article>
+                <article class="card">
+                    <div class="card-content">
+                        <h3>RSS-only fallback</h3>
+                        <ul>
+                            <li>OpenAI Blog RSS for policy and product posts.</li>
+                            <li>Anthropic newsroom feed for Claude updates.</li>
+                            <li>arXiv <code>cs.AI</code> for fresh research drops.</li>
+                        </ul>
                     </div>
-                </aside>
-            </div>
-        </section>
-
-        <section class="section" id="qa">
-            <div class="section-header">
-                <p class="section-eyebrow">Quality Stack</p>
-                <h2 class="section-title">Operational guardrails wired end-to-end.</h2>
-                <p class="section-description">Live dashboards track failure modes, latency thresholds, and quality metrics so humans remain in control.</p>
-            </div>
-            <div class="metric-grid">
-                <div class="metric">
-                    <span class="badge">Active Pipelines</span>
-                    <span class="value" data-counter="42">0</span>
-                    <p>Production automations with 24/7 monitoring & auto-remediation.</p>
-                </div>
-                <div class="metric">
-                    <span class="badge">Latency Budget</span>
-                    <span class="value" data-counter="320">0ms</span>
-                    <p>Median end-to-end time from signal to verified execution.</p>
-                </div>
-                <div class="metric">
-                    <span class="badge">Human Overrides</span>
-                    <span class="value trend-down" data-counter="2.3">0%</span>
-                    <p>Average manual intervention rate post agent observability rollout.</p>
-                </div>
-                <div class="metric">
-                    <span class="badge">Documentation</span>
-                    <span class="value" data-counter="178">0</span>
-                    <p>Living artifacts delivered: SOPs, API schemas, compliance packs.</p>
-                </div>
+                </article>
+                <article class="card">
+                    <div class="card-content">
+                        <h3>Chatbot workflow</h3>
+                        <ul>
+                            <li>Dialogflow CX free tier with webhook to this JSON feed.</li>
+                            <li>Botpress or Flowise to orchestrate search + summarisation.</li>
+                            <li>n8n automation to cache headlines and push Slack alerts.</li>
+                        </ul>
+                    </div>
+                </article>
+                <article class="card">
+                    <div class="card-content">
+                        <h3>Scraping safety net</h3>
+                        <ul>
+                            <li>Use Python + BeautifulSoup with respect for robots.txt.</li>
+                            <li>Host on Render or Replit for zero cost.</li>
+                            <li>Embed the JSON output via iframe or edge function.</li>
+                        </ul>
+                    </div>
+                </article>
             </div>
         </section>
     </main>
 
-    <button class="chatbot-toggle" id="chatbot-toggle" aria-haspopup="dialog" aria-controls="chatbot-panel" aria-expanded="false">
-        <span aria-hidden="true">💬</span>
-    </button>
-
-    <aside class="chatbot-panel" id="chatbot-panel" role="dialog" aria-modal="true" aria-label="Adaryus automation assistant">
-        <header class="chatbot-header">
-            <div class="ai-avatar">AI</div>
-            <div>
-                <h4>Adaryus Automation Copilot</h4>
-                <p class="section-description">Ask about workflows, guardrails, or implementation details.</p>
-            </div>
-        </header>
-        <div class="chatbot-body" id="chatbot-body"></div>
-        <footer class="chatbot-footer">
-            <label class="sr-only" for="chatbot-input">Message</label>
-            <input id="chatbot-input" type="text" placeholder="How do you mitigate hallucinations?" autocomplete="off">
-            <button id="chatbot-send" type="button">Send</button>
-        </footer>
-    </aside>
-
     <footer class="footer">
         <div class="footer-inner">
             <div>
-                <h4>Adaryus Automation Studio</h4>
-                <p>Engineering-grade AI systems for teams who ship software, content, and customer experiences at scale.</p>
+                <h4>Adaryus AI Studio</h4>
+                <p>Automation strategists shipping agentic workflows, guardrails, and observability for teams that move fast.</p>
             </div>
             <div>
-                <h4>Explore</h4>
+                <h4>Explore more</h4>
                 <div class="footer-links">
-                    <a href="projects.html">Blueprints</a>
-                    <a href="dashboard.html">Operations Console</a>
-                    <a href="downloads.html">Start Kits</a>
-                    <a href="prompts.html">Prompt Systems</a>
+                    <a href="downloads.html">Download playbooks</a>
+                    <a href="prompts.html">Prompt operating system</a>
+                    <a href="dashboard.html">Automation dashboard</a>
                 </div>
             </div>
             <div>
-                <h4>Contact</h4>
-                <p>Email <a href="mailto:build@adaryus.ai">build@adaryus.ai</a> or schedule a workshop to scope your automation roadmap.</p>
+                <h4>Need a custom feed?</h4>
+                <p>Email <a href="mailto:build@adaryus.ai">build@adaryus.ai</a> to extend coverage with private data and summarisation.</p>
             </div>
         </div>
     </footer>
-
-    <div class="modal-backdrop" id="blueprint-modal" role="dialog" aria-modal="true" aria-hidden="true">
-        <article class="modal">
-            <header class="modal-header">
-                <h3 id="modal-title">Blueprint</h3>
-                <button class="btn btn-secondary" data-close-modal>Close</button>
-            </header>
-            <div class="modal-body">
+</body>
+</html>
                 <p id="modal-summary"></p>
                 <pre class="code-block" id="modal-code"></pre>
             </div>

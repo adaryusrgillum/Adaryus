@@ -39,60 +39,70 @@
     </header>
 
     <main>
-        <section class="hero" style="padding-bottom:2.5rem;">
+        <section class="hero">
             <div class="hero-grid">
                 <div class="hero-content">
                     <p class="badge">Technical Downloads</p>
                     <h1>Blueprint kits, prompt libraries, and eval harnesses.</h1>
-                    <p class="hero-description">Designed for leading AI consulting teams who need to ship revenue-driving, customer-supporting automations with confidence.</p>
+                    <p class="hero-description">Each asset is production-tested with teams deploying agentic automation across revenue, operations, and customer service.</p>
+                    <div class="hero-cta">
+                        <a class="btn btn-primary" href="#asset-library">Browse the library</a>
+                        <a class="btn btn-secondary" href="mailto:build@adaryus.ai">Request custom asset</a>
+                    </div>
                 </div>
-                <aside class="workflow-card">
-                    <h3 class="section-eyebrow">Usage Highlights</h3>
+                <aside class="workflow-card" aria-label="Usage metrics">
+                    <h3 class="section-eyebrow">Usage highlights</h3>
                     <div class="metric-grid">
                         <div class="metric">
                             <span class="badge">Teams Enabled</span>
-                            <section class="section">
-                            <p>Org-wide downloads in the last 90 days.</p>
+                            <span class="value">27</span>
+                            <p>Org-wide rollouts last quarter.</p>
                         </div>
-                                    <h2 class="section-title">Select assets by category and format.</h2>
+                        <div class="metric">
                             <span class="badge">Blueprint Imports</span>
                             <span class="value">143</span>
-                            <p>Direct n8n / LangGraph imports tracked.</p>
-                                    <div class="card-content" style="gap:1.5rem;">
-                                        <div class="download-controls">
-                                            <label class="download-control">
-                                                <span class="badge">Search</span>
-                                                <input id="download-search" class="download-input" type="search" placeholder="Search assets">
-                                            </label>
-                                            <label class="download-control">
-                                                <span class="badge">Category</span>
-                                                <select id="download-category" class="download-select">
-                                                    <option value="all">All</option>
-                                                    <option value="Architecture">Architecture</option>
-                                                    <option value="Workflow">Workflow</option>
-                                                    <option value="Media">Media</option>
-                                                    <option value="Documentation">Documentation</option>
-                                                    <option value="Operations">Operations</option>
-                                                    <option value="Prompt Ops">Prompt Ops</option>
-                                                    <option value="Revenue">Revenue</option>
-                                                    <option value="Support">Support</option>
-                                                </select>
-                                            </label>
-                                            <label class="download-control">
-                                                <span class="badge">Format</span>
-                                                <select id="download-format" class="download-select">
-                                                    <option value="all">All</option>
-                                                    <option value="PDF">PDF</option>
-                                                    <option value="JSON">JSON</option>
-                                                    <option value="IPYNB">Notebook</option>
-                                                    <option value="MD">Markdown</option>
-                                                </select>
-                                            </label>
+                            <p>Direct n8n and LangGraph installs tracked.</p>
+                        </div>
+                        <div class="metric">
+                            <span class="badge">Eval Harness Runs</span>
+                            <span class="value">3.6k</span>
+                            <p>Recorded QA executions across clients.</p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="section" id="asset-library" aria-labelledby="download-library-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Download Catalog</p>
+                <h2 class="section-title" id="download-library-heading">Select assets by use case, category, or delivery format.</h2>
+                <p class="section-description">Filter to the automation blueprint, documentation template, or prompt pack you need. Private customer kits remain available on request.</p>
+            </div>
+            <article class="card">
+                <div class="card-content" style="gap:1.5rem;">
+                    <div class="download-controls">
+                        <label class="download-control" for="download-search">
+                            <span class="badge">Search</span>
+                            <input id="download-search" class="download-input" type="search" placeholder="Search assets">
+                        </label>
+                        <label class="download-control" for="download-category">
+                            <span class="badge">Category</span>
+                            <select id="download-category" class="download-select">
+                                <option value="all">All</option>
+                                <option value="Architecture">Architecture</option>
+                                <option value="Workflow">Workflow</option>
+                                <option value="Media">Media</option>
+                                <option value="Documentation">Documentation</option>
+                                <option value="Operations">Operations</option>
+                                <option value="Prompt Ops">Prompt Ops</option>
+                                <option value="Revenue">Revenue</option>
+                                <option value="Support">Support</option>
                             </select>
-                                        <div style="overflow-x:auto;">
-                                            <table class="download-table">
+                        </label>
+                        <label class="download-control" for="download-format">
                             <span class="badge">Format</span>
-                            <select id="download-format" style="width:100%; margin-top:0.5rem; padding:0.85rem 1rem; border-radius:14px; border:1px solid rgba(148,163,184,0.35); background:rgba(14,22,37,0.65); color:var(--fg-primary);">
+                            <select id="download-format" class="download-select">
                                 <option value="all">All</option>
                                 <option value="PDF">PDF</option>
                                 <option value="JSON">JSON</option>
@@ -102,115 +112,127 @@
                         </label>
                     </div>
                     <div style="overflow-x:auto;">
-                        <table>
+                        <table class="download-table">
                             <thead>
                                 <tr>
-                                    <th>Asset</th>
-
-                            <section class="section" aria-labelledby="download-impact-heading">
-                                <div class="section-header">
-                                    <p class="section-eyebrow">Enterprise Impact</p>
-                                    <h2 class="section-title" id="download-impact-heading">Accelerate revenue, customer service, and operational performance.</h2>
-                                    <p class="section-description">Each download is field-tested with enterprise teams deploying AI copilots, guardrails, and automation for measurable business outcomes.</p>
-                                </div>
-                                <div class="card-grid">
-                                    <article class="card impact-card">
-                                        <div class="card-content">
-                                            <div class="card-icon">💼</div>
-                                            <h3>Revenue Acceleration</h3>
-                                            <p>Blueprints for sales-qualified lead scoring, account intelligence, and executive briefings.</p>
-                                            <ul>
-                                                <li>Deal coaching prompt packs</li>
-                                                <li>Opportunity risk alerts</li>
-                                                <li>Pipeline pacing dashboards</li>
-                                            </ul>
-                                        </div>
-                                    </article>
-                                    <article class="card impact-card">
-                                        <div class="card-content">
-                                            <div class="card-icon">🤝</div>
-                                            <h3>Customer Experience</h3>
-                                            <p>Service automations that blend retrieval, policy orchestration, and human escalation.</p>
-                                            <ul>
-                                                <li>Support copilot blueprints</li>
-                                                <li>Policy-aware resolution flows</li>
-                                                <li>NPS and CSAT insight templates</li>
-                                            </ul>
-                                        </div>
-                                    </article>
-                                    <article class="card impact-card">
-                                        <div class="card-content">
-                                            <div class="card-icon">📊</div>
-                                            <h3>Operational Excellence</h3>
-                                            <p>Data-driven automations with evaluation harnesses, observability, and compliance artifacts.</p>
-                                            <ul>
-                                                <li>Exec-ready KPI scorecards</li>
-                                                <li>EvalOps test suites</li>
-                                                <li>Cost optimization frameworks</li>
-                                            </ul>
-                                        </div>
-                                    </article>
-                                </div>
-                            </section>
-
-                            <section class="section" aria-labelledby="prompt-library-heading">
-                                <div class="section-header">
-                                    <p class="section-eyebrow">Prompt Library</p>
-                                    <h2 class="section-title" id="prompt-library-heading">Curated prompt systems for leadership, revenue, and service teams.</h2>
-                                    <p class="section-description">Pair downloads with prompt stacks that drive adoption across commercial, operations, and customer success workflows.</p>
-                                </div>
-                                <div class="card-grid">
-                                    <article class="card prompt-card">
-                                        <div class="card-content">
-                                            <div class="card-icon">📈</div>
-                                            <h3>Growth Leadership Suite</h3>
-                                            <p>Executive prompts for pipeline health, forecast clarity, and board-ready narratives.</p>
-                                            <ul>
-                                                <li>Weighted forecast reconciler</li>
-                                                <li>Account expansion brief creator</li>
-                                                <li>Weekly GTM readout generator</li>
-                                            </ul>
-                                            <a class="btn btn-secondary" href="prompts.html">Explore prompts</a>
-                                        </div>
-                                    </article>
-                                    <article class="card prompt-card">
-                                        <div class="card-content">
-                                            <div class="card-icon">🛎️</div>
-                                            <h3>Service & Support Copilot</h3>
-                                            <p>Prompt flows tuned for policy-aware ticket resolution and proactive retention plays.</p>
-                                            <ul>
-                                                <li>Escalation triage patterns</li>
-                                                <li>Knowledge reinforcement snippets</li>
-                                                <li>Voice-of-customer mining loops</li>
-                                            </ul>
-                                            <a class="btn btn-secondary" href="prompts.html#service">Download playbooks</a>
-                                        </div>
-                                    </article>
-                                    <article class="card prompt-card">
-                                        <div class="card-content">
-                                            <div class="card-icon">🧪</div>
-                                            <h3>Operations & EvalOps Pack</h3>
-                                            <p>Evaluation and guardrail prompts to validate automation quality before production.</p>
-                                            <ul>
-                                                <li>Scenario-based regression sweeps</li>
-                                                <li>Policy drift detection prompts</li>
-                                                <li>Human-in-the-loop review guides</li>
-                                            </ul>
-                                            <a class="btn btn-secondary" href="prompts.html#ops">View library</a>
-                                        </div>
-                                    </article>
-                                </div>
-                            </section>
-                                    <th>Category</th>
-                                    <th>Format</th>
-                                    <th>Size</th>
-                                    <th></th>
+                                    <th scope="col">Asset</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Format</th>
+                                    <th scope="col">Size</th>
+                                    <th scope="col" aria-label="Download"></th>
                                 </tr>
                             </thead>
                             <tbody id="download-table-body"></tbody>
                         </table>
                     </div>
                 </div>
+            </article>
+        </section>
+
+        <section class="section" aria-labelledby="download-impact-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Enterprise Impact</p>
+                <h2 class="section-title" id="download-impact-heading">Deploy AI systems that accelerate revenue, support, and operations.</h2>
+                <p class="section-description">Each downloadable asset is field-tested with production teams building copilots, quality guardrails, and automation observability.</p>
+            </div>
+            <div class="card-grid">
+                <article class="card impact-card">
+                    <div class="card-content">
+                        <div class="card-icon">💼</div>
+                        <h3>Revenue Acceleration</h3>
+                        <p>Blueprints for lead scoring, account intelligence, and executive-ready briefings.</p>
+                        <ul>
+                            <li>Deal coaching prompt packs</li>
+                            <li>Opportunity risk alerts</li>
+                            <li>Pipeline pacing dashboards</li>
+                        </ul>
+                    </div>
+                </article>
+                <article class="card impact-card">
+                    <div class="card-content">
+                        <div class="card-icon">🤝</div>
+                        <h3>Customer Experience</h3>
+                        <p>Service automations blending retrieval, policy orchestration, and escalation safety.</p>
+                        <ul>
+                            <li>Support copilot blueprints</li>
+                            <li>Policy-aware resolution flows</li>
+                            <li>NPS and CSAT insight templates</li>
+                        </ul>
+                    </div>
+                </article>
+                <article class="card impact-card">
+                    <div class="card-content">
+                        <div class="card-icon">📊</div>
+                        <h3>Operational Excellence</h3>
+                        <p>Eval harnesses, observability dashboards, and compliance artifacts ready to deploy.</p>
+                        <ul>
+                            <li>Exec-ready KPI scorecards</li>
+                            <li>EvalOps regression suites</li>
+                            <li>Cost optimisation frameworks</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="prompt-library-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Prompt Library</p>
+                <h2 class="section-title" id="prompt-library-heading">Pair downloads with leadership, revenue, and support prompt systems.</h2>
+                <p class="section-description">Layer in curated prompt stacks to drive adoption across commercial, operations, and customer success workflows.</p>
+            </div>
+            <div class="card-grid">
+                <article class="card prompt-card">
+                    <div class="card-content">
+                        <div class="card-icon">📈</div>
+                        <h3>Growth Leadership Suite</h3>
+                        <p>Executive prompts for forecast clarity, risk detection, and board-ready narratives.</p>
+                        <ul>
+                            <li>Weighted forecast reconciler</li>
+                            <li>Expansion brief generator</li>
+                            <li>Weekly GTM readout builder</li>
+                        </ul>
+                        <a class="btn btn-secondary" href="prompts.html">Explore prompts</a>
+                    </div>
+                </article>
+                <article class="card prompt-card">
+                    <div class="card-content">
+                        <div class="card-icon">🛎️</div>
+                        <h3>Service & Support Copilot</h3>
+                        <p>Prompt flows tuned for policy-aware resolution, escalation, and retention plays.</p>
+                        <ul>
+                            <li>Escalation triage patterns</li>
+                            <li>Knowledge reinforcement snippets</li>
+                            <li>Voice-of-customer mining loops</li>
+                        </ul>
+                        <a class="btn btn-secondary" href="prompts.html#service">Download playbooks</a>
+                    </div>
+                </article>
+                <article class="card prompt-card">
+                    <div class="card-content">
+                        <div class="card-icon">🧪</div>
+                        <h3>Operations & EvalOps Pack</h3>
+                        <p>Evaluation prompts to validate automation quality before and after launch.</p>
+                        <ul>
+                            <li>Scenario-based regression sweeps</li>
+                            <li>Policy drift detection prompts</li>
+                            <li>Human-in-the-loop review guides</li>
+                        </ul>
+                        <a class="btn btn-secondary" href="prompts.html#ops">View library</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="cta-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Need something bespoke?</p>
+                <h2 class="section-title" id="cta-heading">We assemble private kits for regulated teams.</h2>
+                <p class="section-description">Share your automation brief and we will tailor workflows, guardrails, and eval coverage to your environment.</p>
+            </div>
+            <div class="hero-cta" style="justify-content:center;">
+                <a class="btn btn-primary" href="mailto:build@adaryus.ai">Start a scoped engagement</a>
+                <a class="btn btn-secondary" href="services.html">Review services</a>
             </div>
         </section>
     </main>

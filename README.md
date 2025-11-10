@@ -1,6 +1,6 @@
-# Adaryus • Agentic AI Automation Studio
+# Adaryus • AI News Radar & Automation Toolkit
 
-**Advanced agentic AI automation studio delivering multi-agent workflows, RAG systems, and measurable enterprise impact.**
+**Realtime AI news aggregator, model release tracker, and conversational briefing hub built for automation teams.**
 
 ## Getting Started
 
@@ -15,7 +15,7 @@ Any static file server works (`npx serve`, `http-server`, etc.).
 
 ## Project Structure
 
-- `index.html` – homepage with hero animation, workflow visualiser, and chatbot demo.
+- `index.html` – SEO-optimised AI news radar with realtime feeds, podcasts, and chat assistant.
 - `services.html` – detailed service catalog and engagement models.
 - `projects.html` – interactive blueprint gallery with JSON exports.
 - `downloads.html` – searchable resource library with instant downloads.
@@ -23,30 +23,34 @@ Any static file server works (`npx serve`, `http-server`, etc.).
 - `insights.html` – modal-based technical insights and code snippets.
 - `dashboard.html` – operations console with live charts.
 - `assets/css/style.css` – global theme, components, and layout primitives.
-- `assets/js/main.js` – shared logic for animations, chat simulation, charts, and page controllers.
+- `assets/js/main.js` – news aggregation, feed rendering, chatbot logic, and shared controllers.
+- `assets/js/config.example.js` – sample configuration for API keys, extra RSS feeds, or custom chat webhook.
 
-## 🤖 AI Chatbot Feature
+## 🔌 Configuration (Optional)
 
-The website includes an interactive AI chatbot powered by simulated RAG:
+- Edit `assets/js/config.js` (defaults are empty strings) or
+- Create `assets/js/config.local.js` (ignored by git) to override sensitive values using the same shape.
 
-- **Location**: Fixed button in bottom-right corner
-- **Functionality**: Answers questions about automation, RAG, guardrails, and evaluation
-- **Knowledge Base**: Embedded documentation with source attribution
-- **Features**:
-  - Multi-turn conversation memory
-  - Context-aware responses
-  - Source citations
-  - Smooth animations
+Fields you can supply:
 
-The chatbot is fully functional without external API calls—all knowledge is embedded in the JavaScript.
+- `newsApiKey` – NewsAPI.org key to enrich the community digest (client-side requests).
+- `rssFeeds` – Array of extra RSS URLs (e.g. Google AI Blog, Open Source agendas).
+- `chatWebhookUrl` – POST endpoint to delegate chatbot answers to Dialogflow, Botpress, Flowise, or n8n.
+
+Without any configuration the site still works using public feeds (Hacker News, Hugging Face, Anthropic, OpenAI, Reddit).
+
+## 🤖 Conversational Briefing
+
+- **Location**: “Conversational Summary” section on the homepage.
+- **Functionality**: Ranks aggregated items and responds with contextual links.
+- **Offline Mode**: Works entirely in-browser using harvested feed data.
+- **Webhook Mode**: Optional server-side summarisation via your webhook (`chatWebhookUrl`).
 
 ## Dependencies
 
-The site loads a few CDN libraries for animations and charts:
-
-- [anime.js](https://animejs.com/) – workflow line animations.
-- [typed.js](https://mattboldt.com/demos/typed-js/) – hero keyword rotation.
 - [Chart.js](https://www.chartjs.org/) – dashboard visualisations (lazy-loaded on demand).
+- Browser Fetch API – collects JSON/RSS data from public endpoints.
+- Optional: NewsAPI.org REST endpoint (requires API key if enabled).
 
 ## Development Notes
 
@@ -59,22 +63,23 @@ The site loads a few CDN libraries for animations and charts:
 ## Features
 
 ✨ **Interactive Components**
-- Workflow visualizer with animated data flows
-- Multi-agent architecture demonstrations
-- Real-time metrics and KPI tracking
-- Modal-based code/blueprint viewers
+- AI news digest sourced from community APIs & RSS.
+- Hugging Face model release tracker with likes/downloads.
+- Announcement grid for OpenAI, Anthropic, and custom feeds.
+- Conversational assistant that surfaces top matches on demand.
+- Integration playbook with step-by-step deployment ideas.
 
 🎨 **Modern Design**
-- Dark theme with glassmorphism effects
-- Smooth animations and transitions
-- Fully responsive (desktop/tablet/mobile)
-- Canvas-based particle background
+- Dark theme with glassmorphism accents & responsive grids.
+- SEO-first structure (metadata, canonical, JSON-LD schema).
+- Skeleton loaders for fast perceived performance.
+- Accessible components with keyboard/ARIA support.
 
 🔧 **Technical Stack**
-- Pure HTML/CSS/JavaScript (no build required)
-- Embedded knowledge base for chatbot
-- SVG-based visualizations
-- Canvas animations for particles
+- Pure HTML/CSS/JavaScript (no build required).
+- Client-side feed aggregation with optional API enrichment.
+- Static deployment ready for GitHub Pages / CDN edge caches.
+- Shared controllers powering legacy service/blueprint pages.
 
 ## Troubleshooting
 
