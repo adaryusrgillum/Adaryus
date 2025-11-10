@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaryus - AI News Aggregator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🤖 Adaryus AI News Hub</h1>
+            <p class="tagline">Your daily source for AI breakthroughs, model releases, and industry updates</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" data-tab="news">Latest News</button>
+            <button class="tab-button" data-tab="models">Model Releases</button>
+            <button class="tab-button" data-tab="chat">AI Assistant</button>
+        </div>
+
+        <!-- Latest News Tab -->
+        <div id="news-tab" class="tab-content active">
+            <div class="section-header">
+                <h2>📰 Latest AI News</h2>
+                <button id="refresh-news" class="refresh-btn">Refresh</button>
+            </div>
+            <div id="news-loading" class="loading">Loading latest AI news...</div>
+            <div id="news-container" class="news-grid"></div>
+        </div>
+
+        <!-- Model Releases Tab -->
+        <div id="models-tab" class="tab-content">
+            <div class="section-header">
+                <h2>🚀 Latest Model Releases</h2>
+                <button id="refresh-models" class="refresh-btn">Refresh</button>
+            </div>
+            <div id="models-loading" class="loading">Loading latest models from Hugging Face...</div>
+            <div id="models-container" class="models-grid"></div>
+        </div>
+
+        <!-- AI Assistant Tab -->
+        <div id="chat-tab" class="tab-content">
+            <div class="section-header">
+                <h2>💬 AI News Assistant</h2>
+            </div>
+            <div class="chat-container">
+                <div id="chat-messages" class="chat-messages">
+                    <div class="message bot-message">
+                        <strong>AI Assistant:</strong> Hello! I'm your AI news assistant. Ask me about:
+                        <ul>
+                            <li>Latest AI news and developments</li>
+                            <li>Recent model releases on Hugging Face</li>
+                            <li>Specific AI topics or companies</li>
+                        </ul>
+                        Try asking: "What's the latest AI news?" or "Show me recent models"
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <input type="text" id="chat-input" placeholder="Ask about AI news..." />
+                    <button id="chat-send">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RSS Feeds Section -->
+        <div class="rss-section">
+            <h3>📡 Following Sources</h3>
+            <div class="sources-list">
+                <span class="source-tag">OpenAI Blog</span>
+                <span class="source-tag">Anthropic</span>
+                <span class="source-tag">Hugging Face</span>
+                <span class="source-tag">arXiv AI</span>
+                <span class="source-tag">TechCrunch AI</span>
+                <span class="source-tag">r/MachineLearning</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Adaryus.com - AI News Aggregator | Free & Open Source</p>
+            <p class="disclaimer">News fetched from public APIs and RSS feeds. Some features may have rate limits.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
