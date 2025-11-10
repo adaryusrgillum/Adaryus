@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects • Adaryus Blueprints</title>
+    <meta name="description" content="Explore automation blueprints, implementation metrics, and the tooling stack powering Adaryus agent systems.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script defer src="assets/js/main.js"></script>
+</head>
+<body data-page="projects">
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a class="logo" href="index.html"><span>Adaryus</span><span class="mono">AI STUDIO</span></a>
+            <nav class="nav-links" aria-label="Primary">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html" class="active">Projects</a>
+                <a href="downloads.html">Downloads</a>
+                <a href="prompts.html">Prompt Ops</a>
+                <a href="insights.html">Insights</a>
+                <a href="dashboard.html">Dashboard</a>
+            </nav>
+            <a class="nav-cta" href="mailto:build@adaryus.ai">Request a blueprint →</a>
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="mobile-menu" id="mobile-menu">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html" class="active">Projects</a>
+                <a href="downloads.html">Downloads</a>
+                <a href="prompts.html">Prompt Ops</a>
+                <a href="insights.html">Insights</a>
+                <a href="dashboard.html">Dashboard</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" style="padding-bottom:3rem;">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <p class="badge">Blueprint Library</p>
+                    <h1>Battle-tested <span class="gradient-text">automation playbooks</span> ready for deployment.</h1>
+                    <p class="hero-description">Each project includes the architecture, instrumentation, and quality guardrails used in production.</p>
+                    <div class="hero-cta">
+                        <a class="btn btn-primary" href="downloads.html">Download starter kits</a>
+                        <a class="btn btn-secondary" href="mailto:build@adaryus.ai">Schedule live walkthrough</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="project-grid">
+            <div class="section-header">
+                <p class="section-eyebrow">Project Catalog</p>
+                <h2 class="section-title">Select a blueprint to inspect code, stack, and success metrics.</h2>
+                <p class="section-description">These automations run with live customers across marketing, revenue, support, and data teams.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <h4>Adaryus Automation Studio</h4>
+                <p>Engineering-grade AI systems for teams who ship software, content, and customer experiences at scale.</p>
+            </div>
+            <div>
+                <h4>Resources</h4>
+                <div class="footer-links">
+                    <a href="downloads.html">Downloads</a>
+                    <a href="prompts.html">Prompt systems</a>
+                    <a href="insights.html">Technical insights</a>
+                </div>
+            </div>
+            <div>
+                <h4>Need a bespoke workflow?</h4>
+                <p>Email <a href="mailto:build@adaryus.ai">build@adaryus.ai</a> or drop into the operations dashboard for live metrics.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-backdrop" id="project-modal">
+        <article class="modal">
+            <header class="modal-header">
+                <h3 id="project-modal-title">Project</h3>
+                <button class="btn btn-secondary" data-close-modal>Close</button>
+            </header>
+            <div class="modal-body">
+                <p id="project-modal-summary"></p>
+                <h4>Key metrics</h4>
+                <ul id="project-modal-metrics"></ul>
+                <h4>Blueprint export</h4>
+                <pre class="code-block" id="project-modal-code"></pre>
+            </div>
+        </article>
+    </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations Dashboard • Adaryus</title>
+    <meta name="description" content="Live automation metrics, reliability indicators, and cost-performance trends across Adaryus deployments.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script defer src="assets/js/main.js"></script>
+</head>
+<body data-page="dashboard">
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a class="logo" href="index.html"><span>Adaryus</span><span class="mono">AI STUDIO</span></a>
+            <nav class="nav-links" aria-label="Primary">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="downloads.html">Downloads</a>
+                <a href="prompts.html">Prompt Ops</a>
+                <a href="insights.html">Insights</a>
+                <a href="dashboard.html" class="active">Dashboard</a>
+            </nav>
+            <a class="nav-cta" href="mailto:build@adaryus.ai">Request access →</a>
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="mobile-menu" id="mobile-menu">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="downloads.html">Downloads</a>
+                <a href="prompts.html">Prompt Ops</a>
+                <a href="insights.html">Insights</a>
+                <a href="dashboard.html" class="active">Dashboard</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" style="padding-bottom:2.5rem;">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <p class="badge">Operations Console</p>
+                    <h1>Realtime signal across automation, eval, and spend.</h1>
+                    <p class="hero-description">Share access with exec stakeholders or embed widgets inside your internal portals.</p>
+                </div>
+                <aside class="workflow-card">
+                    <h3 class="section-eyebrow">Live Health</h3>
+                    <div class="metric-grid">
+                        <div class="metric" data-metric="success-rate">
+                            <span class="badge">Success Rate</span>
+                            <span class="value">94.3%</span>
+                            <p class="trend">Loading…</p>
+                        </div>
+                        <div class="metric" data-metric="uptime">
+                            <span class="badge">Automation Uptime</span>
+                            <span class="value">99.7%</span>
+                            <p class="trend">Loading…</p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="section" style="padding-top:0;">
+            <div class="section-header" style="margin-bottom:2rem;">
+                <p class="section-eyebrow">KPIs</p>
+                <h2 class="section-title">Understand throughput, cost, and quality in one view.</h2>
+            </div>
+            <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));">
+                <article class="card" style="height:320px;">
+                    <div class="card-content" style="height:100%;">
+                        <h3>Pipeline Throughput</h3>
+                        <canvas data-chart="pipeline-throughput" aria-label="Pipeline throughput chart"></canvas>
+                    </div>
+                </article>
+                <article class="card" style="height:320px;">
+                    <div class="card-content" style="height:100%;">
+                        <h3>Cost Distribution</h3>
+                        <canvas data-chart="cost-curve" aria-label="Cost distribution chart"></canvas>
+                    </div>
+                </article>
+                <article class="card" style="height:320px;">
+                    <div class="card-content" style="height:100%;">
+                        <h3>Quality Scores</h3>
+                        <canvas data-chart="quality-scores" aria-label="Quality score radar"></canvas>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <p class="section-eyebrow">Activity Log</p>
+                <h2 class="section-title">Latest automation events and SLA annotations.</h2>
+            </div>
+            <div class="card" style="margin:0 auto; max-width:1280px;">
+                <div class="card-content" style="gap:1rem;">
+                    <div class="timeline">
+                        <div class="timeline-entry">
+                            <h4>Content Engine release 1.2.3</h4>
+                            <p>Launched auto QA coverage for growth campaigns. Latency held at 168s P95.</p>
+                        </div>
+                        <div class="timeline-entry">
+                            <h4>Support Copilot policy update</h4>
+                            <p>Added GDPR compliance branch and jurisdiction guardrails across EU regions.</p>
+                        </div>
+                        <div class="timeline-entry">
+                            <h4>Analytics desk SQL validator</h4>
+                            <p>Enabled outlier detection and fallback dataset heuristics when schema drift detected.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <h4>Adaryus Automation Studio</h4>
+                <p>Engineering-grade AI systems for teams who ship software, content, and customer experiences at scale.</p>
+            </div>
+            <div>
+                <h4>Integrations</h4>
+                <div class="footer-links">
+                    <span>Grafana</span>
+                    <span>PagerDuty</span>
+                    <span>Snowflake</span>
+                    <span>Notion</span>
+                </div>
+            </div>
+            <div>
+                <h4>Need enterprise access?</h4>
+                <p>Email <a href="mailto:build@adaryus.ai">build@adaryus.ai</a> for SSO and environment setup.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

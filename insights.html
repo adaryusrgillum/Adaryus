@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights • Adaryus Technical Notes</title>
+    <meta name="description" content="Technical deep dives on evaluation, retrieval, and governance powering Adaryus automations.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script defer src="assets/js/main.js"></script>
+</head>
+<body data-page="insights">
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a class="logo" href="index.html"><span>Adaryus</span><span class="mono">AI STUDIO</span></a>
+            <nav class="nav-links" aria-label="Primary">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="downloads.html">Downloads</a>
+                <a href="prompts.html">Prompt Ops</a>
+                <a href="insights.html" class="active">Insights</a>
+                <a href="dashboard.html">Dashboard</a>
+            </nav>
+            <a class="nav-cta" href="mailto:build@adaryus.ai">Request a briefing →</a>
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="mobile-menu" id="mobile-menu">
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="downloads.html">Downloads</a>
+                <a href="prompts.html">Prompt Ops</a>
+                <a href="insights.html" class="active">Insights</a>
+                <a href="dashboard.html">Dashboard</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" style="padding-bottom:2.5rem;">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <p class="badge">Technical Insights</p>
+                    <h1>Operational intelligence from the automation floor.</h1>
+                    <p class="hero-description">We publish hands-on guidance spanning evaluation harnesses, policy layers, and resilient retrieval meshes.</p>
+                </div>
+                <aside class="workflow-card">
+                    <h3 class="section-eyebrow">What you’ll find</h3>
+                    <ul class="timeline">
+                        <li>Postmortems and mitigation patterns.</li>
+                        <li>Code snippets from live agent deployments.</li>
+                        <li>Metrics frameworks for exec stakeholders.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <p class="section-eyebrow">Field Notes</p>
+                <h2 class="section-title">Browse the latest automation intelligence drops.</h2>
+            </div>
+            <div id="insight-grid" class="card-grid"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <h4>Adaryus Automation Studio</h4>
+                <p>Engineering-grade AI systems for teams who ship software, content, and customer experiences at scale.</p>
+            </div>
+            <div>
+                <h4>Stay Updated</h4>
+                <div class="footer-links">
+                    <a href="downloads.html">Resource kits</a>
+                    <a href="projects.html">Blueprints</a>
+                    <a href="prompts.html">Prompt ops</a>
+                </div>
+            </div>
+            <div>
+                <h4>Newsletter</h4>
+                <p>Join the automation intelligence briefing by emailing <a href="mailto:build@adaryus.ai">build@adaryus.ai</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-backdrop" id="insight-modal">
+        <article class="modal">
+            <header class="modal-header">
+                <h3 id="insight-modal-title">Insight</h3>
+                <button class="btn btn-secondary" data-close-modal>Close</button>
+            </header>
+            <div class="modal-body">
+                <p id="insight-modal-body"></p>
+                <pre class="code-block" id="insight-modal-code"></pre>
+            </div>
+        </article>
+    </div>
+</body>
+</html>
