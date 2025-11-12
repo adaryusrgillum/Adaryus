@@ -16,6 +16,39 @@ const Adaryus = {
     newsCorpus: [],
     podcasts: [],
     trendTopics: [],
+    
+    // Performance optimization: Cache for API responses
+    _apiCache: new Map(),
+    _cacheExpiry: new Map(),
+    CACHE_DURATION: 5 * 60 * 1000, // 5 minutes
+    
+    // Performance optimization: DOM element cache
+    _domCache: {},
+    
+    // Performance helper: Debounce function
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    },
+    
+    // Performance helper: Throttle function
+    throttle(func, limit) {
+        let inThrottle;
+        return function(...args) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    },
 
     // ========================================
     // Core Initialization
@@ -388,14 +421,30 @@ const Adaryus = {
     // DOM & Event Handling
     // ========================================
     cacheGlobalElements() {
-        this.navbar = document.getElementById('navbar');
-        this.mobileToggle = document.getElementById('mobile-toggle');
-        this.mobileMenu = document.getElementById('mobile-menu');
-        this.blueprintModal = document.getElementById('blueprint-modal');
-        this.modalTitle = document.getElementById('modal-title');
-        this.modalSummary = document.getElementById('modal-summary');
-        this.modalCode = document.getElementById('modal-code');
-        this.canvas = document.getElementById('particle-canvas');
+        // Cache commonly accessed elements
+        const elements = {
+            navbar: 'navbar',
+            mobileToggle: 'mobile-toggle',
+            mobileMenu: 'mobile-menu',
+            blueprintModal: 'blueprint-modal',
+            modalTitle: 'modal-title',
+            modalSummary: 'modal-summary',
+            modalCode: 'modal-code',
+            canvas: 'particle-canvas'
+        };
+        
+        // Batch DOM queries for better performance
+        Object.entries(elements).forEach(([key, id]) => {
+            this[key] = document.getElementById(id);
+        });
+    },
+    
+    // Performance helper: Get cached DOM element
+    getElement(id) {
+        if (!this._domCache[id]) {
+            this._domCache[id] = document.getElementById(id);
+        }
+        return this._domCache[id];
     },
 
     bindNav() {
@@ -416,7 +465,9 @@ const Adaryus = {
             }
         };
         toggleClass();
-        window.addEventListener('scroll', toggleClass, { passive: true });
+        // Throttle scroll events for better performance
+        const throttledToggle = this.throttle(toggleClass, 100);
+        window.addEventListener('scroll', throttledToggle, { passive: true });
     },
 
     initParticles() {
@@ -463,20 +514,26 @@ const Adaryus = {
 
     animateCounters() {
         const counters = document.querySelectorAll('[data-counter]');
-        counters.forEach(counter => {
+        if (!counters.length) return;
+        
+        const animate = (counter) => {
             const target = Number(counter.dataset.counter);
             const suffix = counter.textContent.replace(/[0-9.]/g, '').trim();
-            let start = 0;
             const duration = 1400;
+            const decimals = target < 5 ? 1 : 0;
+            
             const step = timestamp => {
                 if (!counter.startTime) counter.startTime = timestamp;
                 const progress = Math.min((timestamp - counter.startTime) / duration, 1);
-                const value = (target * progress).toFixed(target < 5 ? 1 : 0);
+                const value = (target * progress).toFixed(decimals);
                 counter.textContent = suffix ? `${value}${suffix}` : value;
                 if (progress < 1) requestAnimationFrame(step);
             };
             requestAnimationFrame(step);
-        });
+        };
+        
+        // Use forEach instead of iteration to avoid creating unnecessary closures
+        counters.forEach(animate);
     },
 
     initBlueprintModal() {
@@ -777,10 +834,13 @@ const Adaryus = {
             const format = formatFilter.value;
             list.innerHTML = '';
 
-            const filtered = this.downloads
-                .filter(item => (!term || item.name.toLowerCase().includes(term) || item.description.toLowerCase().includes(term)))
-                .filter(item => (category === 'all' ? true : item.category === category))
-                .filter(item => (format === 'all' ? true : item.format.toLowerCase() === format.toLowerCase()));
+            // Optimize: Combine filters in single pass
+            const filtered = this.downloads.filter(item => {
+                const matchesTerm = !term || item.name.toLowerCase().includes(term) || item.description.toLowerCase().includes(term);
+                const matchesCategory = category === 'all' || item.category === category;
+                const matchesFormat = format === 'all' || item.format.toLowerCase() === format.toLowerCase();
+                return matchesTerm && matchesCategory && matchesFormat;
+            });
 
             if (!filtered.length) {
                 const emptyRow = document.createElement('tr');
@@ -790,6 +850,8 @@ const Adaryus = {
                 return;
             }
 
+            // Use DocumentFragment for better performance
+            const fragment = document.createDocumentFragment();
             filtered.forEach(item => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -799,8 +861,9 @@ const Adaryus = {
                     <td data-label="Size">${item.size}</td>
                     <td data-label="Download"><button class="btn btn-secondary" data-download-id="${item.id}">Download</button></td>
                 `;
-                list.appendChild(row);
+                fragment.appendChild(row);
             });
+            list.appendChild(fragment);
         };
 
         const download = id => {
@@ -825,7 +888,9 @@ const Adaryus = {
             URL.revokeObjectURL(url);
         };
 
-        search.addEventListener('input', render);
+        // Debounce search input for better performance
+        const debouncedRender = this.debounce(render, 300);
+        search.addEventListener('input', debouncedRender);
         categoryFilter.addEventListener('change', render);
         formatFilter.addEventListener('change', render);
         document.addEventListener('click', event => {
@@ -869,17 +934,41 @@ const Adaryus = {
     // ========================================
     // Data Loading & API Integration
     // ========================================
+    
+    // Performance helper: Cached fetch with expiry
+    async cachedFetch(url, options = {}) {
+        const now = Date.now();
+        const cached = this._apiCache.get(url);
+        const expiry = this._cacheExpiry.get(url);
+        
+        if (cached && expiry && now < expiry) {
+            return cached;
+        }
+        
+        const response = await fetch(url, options);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        
+        this._apiCache.set(url, data);
+        this._cacheExpiry.set(url, now + this.CACHE_DURATION);
+        
+        return data;
+    },
+    
     async loadAiDigest() {
         const endpoint = 'https://hn.algolia.com/api/v1/search_by_date?query=artificial%20intelligence%20OR%20ai%20OR%20gpt&tags=story&hitsPerPage=12';
         try {
-            const response = await fetch(endpoint);
-            if (!response.ok) throw new Error(`Hacker News response ${response.status}`);
-            const payload = await response.json();
+            const payload = await this.cachedFetch(endpoint);
             const hits = Array.isArray(payload?.hits) ? payload.hits : [];
-            this.aiDigest = hits.map(hit => {
+            
+            // Use map + filter in one pass for better performance
+            this.aiDigest = hits.reduce((acc, hit) => {
                 const title = hit.title || hit.story_title || 'Untitled update';
                 const fallbackUrl = `https://news.ycombinator.com/item?id=${hit.objectID}`;
                 const url = hit.url || hit.story_url || fallbackUrl;
+                
+                if (!url) return acc;
+                
                 const body = hit.story_text || hit.comment_text || '';
                 const summary = body ? this.truncate(this.stripHtml(body.replace(/\s+/g, ' ')), 180) : 'Community discussion on Hacker News.';
                 const entry = {
@@ -890,8 +979,10 @@ const Adaryus = {
                     date: hit.created_at
                 };
                 this.indexNewsItem(entry);
-                return entry;
-            }).filter(item => Boolean(item.url));
+                acc.push(entry);
+                return acc;
+            }, []);
+            
             if (!this.aiDigest.length) {
                 this.renderEmptyState('ai-headlines', 'No community headlines yet. Check back soon.');
                 return;
@@ -907,13 +998,15 @@ const Adaryus = {
     async loadOptionalNewsApi(apiKey) {
         const endpoint = 'https://newsapi.org/v2/everything?q=artificial%20intelligence%20OR%20machine%20learning&language=en&pageSize=10&sortBy=publishedAt';
         try {
-            const response = await fetch(endpoint, { headers: { 'X-Api-Key': apiKey } });
-            if (!response.ok) throw new Error(`NewsAPI responded ${response.status}`);
-            const payload = await response.json();
+            const payload = await this.cachedFetch(endpoint, { headers: { 'X-Api-Key': apiKey } });
             const articles = Array.isArray(payload?.articles) ? payload.articles : [];
+            
+            // Pre-create a Set for O(1) lookups instead of using Array.some
+            const existingUrls = new Set(this.aiDigest.map(item => item.url));
+            
             articles.forEach(article => {
-                if (!article?.url) return;
-                if (this.aiDigest.some(existing => existing.url === article.url)) return;
+                if (!article?.url || existingUrls.has(article.url)) return;
+                
                 const entry = {
                     title: article.title || 'AI headline',
                     summary: this.truncate(article.description || article.content || '', 200),
@@ -935,35 +1028,48 @@ const Adaryus = {
     // Content Rendering Methods
     // ========================================
     renderHeadlines() {
-        const container = document.getElementById('ai-headlines');
+        const container = this.getElement('ai-headlines');
         if (!container) return;
         if (!this.aiDigest.length) {
             this.renderEmptyState('ai-headlines', 'No AI headlines found right now.');
             return;
         }
-        container.innerHTML = this.aiDigest.slice(0, 12).map(item => `
-            <article class="news-card" role="listitem">
+        
+        // Use DocumentFragment for better performance
+        const fragment = document.createDocumentFragment();
+        const items = this.aiDigest.slice(0, 12);
+        
+        items.forEach(item => {
+            const article = document.createElement('article');
+            article.className = 'news-card';
+            article.setAttribute('role', 'listitem');
+            article.innerHTML = `
                 <h3><a href="${item.url}" target="_blank" rel="noopener">${this.escapeHtml(item.title)}</a></h3>
                 <p>${this.escapeHtml(item.summary)}</p>
                 <div class="news-card-meta">
                     <span class="badge badge-source">${this.escapeHtml(item.source)}</span>
                     <time datetime="${item.date}">${this.formatRelativeTime(item.date)}</time>
                 </div>
-            </article>
-        `).join('');
+            `;
+            fragment.appendChild(article);
+        });
+        
+        container.innerHTML = '';
+        container.appendChild(fragment);
         this.updateTrendList();
     },
 
     async loadModelReleases() {
         const endpoint = 'https://huggingface.co/api/models?limit=12&sort=lastModified&direction=-1';
         try {
-            const response = await fetch(endpoint);
-            if (!response.ok) throw new Error(`Hugging Face response ${response.status}`);
-            const payload = await response.json();
+            const payload = await this.cachedFetch(endpoint);
             const models = Array.isArray(payload) ? payload : [];
-            this.modelReleasesFeed = models.map(model => {
+            
+            // Use reduce instead of map + filter
+            this.modelReleasesFeed = models.reduce((acc, model) => {
                 const id = model.modelId || model.id;
-                if (!id) return null;
+                if (!id) return acc;
+                
                 const tags = Array.isArray(model.tags) ? model.tags.slice(0, 4) : [];
                 const entry = {
                     title: id,
@@ -976,8 +1082,10 @@ const Adaryus = {
                     tags
                 };
                 this.indexNewsItem(entry);
-                return entry;
-            }).filter(Boolean);
+                acc.push(entry);
+                return acc;
+            }, []);
+            
             if (!this.modelReleasesFeed.length) {
                 this.renderEmptyState('model-release-grid', 'No recent model releases detected.');
                 return;
@@ -991,17 +1099,29 @@ const Adaryus = {
     },
 
     renderModelReleases() {
-        const container = document.getElementById('model-release-grid');
+        const container = this.getElement('model-release-grid');
         if (!container) return;
         if (!this.modelReleasesFeed.length) {
             this.renderEmptyState('model-release-grid', 'No recent model releases detected.');
             return;
         }
-        container.innerHTML = this.modelReleasesFeed.map(item => `
-            <article class="news-card" role="listitem">
+        
+        // Use DocumentFragment for better performance
+        const fragment = document.createDocumentFragment();
+        
+        this.modelReleasesFeed.forEach(item => {
+            const article = document.createElement('article');
+            article.className = 'news-card';
+            article.setAttribute('role', 'listitem');
+            
+            const tagsHtml = item.tags.length 
+                ? `<ul class="news-card-tags">${item.tags.map(tag => `<li>${this.escapeHtml(tag)}</li>`).join('')}</ul>` 
+                : '';
+            
+            article.innerHTML = `
                 <h3><a href="${item.url}" target="_blank" rel="noopener">${this.escapeHtml(item.title)}</a></h3>
                 <p>${this.escapeHtml(item.summary)}</p>
-                ${item.tags.length ? `<ul class="news-card-tags">${item.tags.map(tag => `<li>${this.escapeHtml(tag)}</li>`).join('')}</ul>` : ''}
+                ${tagsHtml}
                 <div class="news-card-meta">
                     <span class="badge badge-source">${this.escapeHtml(item.source)}</span>
                     <time datetime="${item.date}">${this.formatRelativeTime(item.date)}</time>
@@ -1010,8 +1130,12 @@ const Adaryus = {
                     <span aria-label="Model likes">❤️ ${item.likes}</span>
                     <span aria-label="Model downloads">⬇️ ${item.downloads}</span>
                 </div>
-            </article>
-        `).join('');
+            `;
+            fragment.appendChild(article);
+        });
+        
+        container.innerHTML = '';
+        container.appendChild(fragment);
         this.updateTrendList();
     },
 
@@ -1049,9 +1173,7 @@ const Adaryus = {
             }
         })();
         const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-        const response = await fetch(proxyUrl);
-        if (!response.ok) throw new Error(`RSS proxy error ${response.status}`);
-        const payload = await response.json();
+        const payload = await this.cachedFetch(proxyUrl);
         const parser = new DOMParser();
         const xml = parser.parseFromString(payload.contents, 'text/xml');
         const items = Array.from(xml.querySelectorAll('item, entry')).slice(0, 8);
@@ -1076,22 +1198,34 @@ const Adaryus = {
     },
 
     renderAnnouncements() {
-        const container = document.getElementById('announcement-grid');
+        const container = this.getElement('announcement-grid');
         if (!container) return;
         if (!this.announcementFeed.length) {
             this.renderEmptyState('announcement-grid', 'No announcements yet.');
             return;
         }
-        container.innerHTML = this.announcementFeed.slice(0, 12).map(item => `
-            <article class="news-card" role="listitem">
+        
+        // Use DocumentFragment for better performance
+        const fragment = document.createDocumentFragment();
+        const items = this.announcementFeed.slice(0, 12);
+        
+        items.forEach(item => {
+            const article = document.createElement('article');
+            article.className = 'news-card';
+            article.setAttribute('role', 'listitem');
+            article.innerHTML = `
                 <h3><a href="${item.url}" target="_blank" rel="noopener">${this.escapeHtml(item.title)}</a></h3>
                 <p>${this.escapeHtml(item.summary)}</p>
                 <div class="news-card-meta">
                     <span class="badge badge-source">${this.escapeHtml(item.source)}</span>
                     <time datetime="${item.date}">${this.formatRelativeTime(item.date)}</time>
                 </div>
-            </article>
-        `).join('');
+            `;
+            fragment.appendChild(article);
+        });
+        
+        container.innerHTML = '';
+        container.appendChild(fragment);
         this.updateTrendList();
     },
 
