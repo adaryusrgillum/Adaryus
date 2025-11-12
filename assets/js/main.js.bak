@@ -24,31 +24,6 @@ const Adaryus = {
     
     // Performance optimization: DOM element cache
     _domCache: {},
-    
-    // Performance helper: Debounce function
-    debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    },
-    
-    // Performance helper: Throttle function
-    throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    },
 
     // ========================================
     // Core Initialization
@@ -465,9 +440,7 @@ const Adaryus = {
             }
         };
         toggleClass();
-        // Throttle scroll events for better performance
-        const throttledToggle = this.throttle(toggleClass, 100);
-        window.addEventListener('scroll', throttledToggle, { passive: true });
+        window.addEventListener('scroll', toggleClass, { passive: true });
     },
 
     initParticles() {
@@ -834,13 +807,10 @@ const Adaryus = {
             const format = formatFilter.value;
             list.innerHTML = '';
 
-            // Optimize: Combine filters in single pass
-            const filtered = this.downloads.filter(item => {
-                const matchesTerm = !term || item.name.toLowerCase().includes(term) || item.description.toLowerCase().includes(term);
-                const matchesCategory = category === 'all' || item.category === category;
-                const matchesFormat = format === 'all' || item.format.toLowerCase() === format.toLowerCase();
-                return matchesTerm && matchesCategory && matchesFormat;
-            });
+            const filtered = this.downloads
+                .filter(item => (!term || item.name.toLowerCase().includes(term) || item.description.toLowerCase().includes(term)))
+                .filter(item => (category === 'all' ? true : item.category === category))
+                .filter(item => (format === 'all' ? true : item.format.toLowerCase() === format.toLowerCase()));
 
             if (!filtered.length) {
                 const emptyRow = document.createElement('tr');
@@ -850,8 +820,6 @@ const Adaryus = {
                 return;
             }
 
-            // Use DocumentFragment for better performance
-            const fragment = document.createDocumentFragment();
             filtered.forEach(item => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -861,9 +829,8 @@ const Adaryus = {
                     <td data-label="Size">${item.size}</td>
                     <td data-label="Download"><button class="btn btn-secondary" data-download-id="${item.id}">Download</button></td>
                 `;
-                fragment.appendChild(row);
+                list.appendChild(row);
             });
-            list.appendChild(fragment);
         };
 
         const download = id => {
@@ -888,9 +855,7 @@ const Adaryus = {
             URL.revokeObjectURL(url);
         };
 
-        // Debounce search input for better performance
-        const debouncedRender = this.debounce(render, 300);
-        search.addEventListener('input', debouncedRender);
+        search.addEventListener('input', render);
         categoryFilter.addEventListener('change', render);
         formatFilter.addEventListener('change', render);
         document.addEventListener('click', event => {
