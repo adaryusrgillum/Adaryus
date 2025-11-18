@@ -1,6 +1,6 @@
 # Adaryus • AI News Radar & Automation Toolkit
 
-**Realtime AI news aggregator, model release tracker, and conversational briefing hub built for automation teams.**
+**Realtime AI news aggregator, model release tracker, and conversational briefing hub built for automation teams. Now featuring a comprehensive AI Tools Directory with advanced search, live comparisons, and community reviews.**
 
 ## Getting Started
 
@@ -16,6 +16,7 @@ Any static file server works (`npx serve`, `http-server`, etc.).
 ## Project Structure
 
 - `index.html` – SEO-optimised AI news radar with realtime feeds, podcasts, and chat assistant.
+- `tools.html` – **NEW** Comprehensive AI tools directory with advanced search, filtering, live comparisons, community reviews, analytics, and personalized recommendations.
 - `services.html` – detailed service catalog and engagement models.
 - `projects.html` – interactive blueprint gallery with JSON exports.
 - `downloads.html` – searchable resource library with instant downloads.
@@ -23,7 +24,9 @@ Any static file server works (`npx serve`, `http-server`, etc.).
 - `insights.html` – modal-based technical insights and code snippets.
 - `dashboard.html` – operations console with live charts.
 - `assets/css/style.css` – global theme, components, and layout primitives.
+- `assets/css/tools.css` – **NEW** AI tools directory specific styles.
 - `assets/js/main.js` – news aggregation, feed rendering, chatbot logic, and shared controllers.
+- `assets/js/tools.js` – **NEW** AI tools directory controller with filtering, comparison, and analytics.
 - `assets/js/config.example.js` – sample configuration for API keys, extra RSS feeds, or custom chat webhook.
 
 ## 🔌 Configuration (Optional)
@@ -62,6 +65,23 @@ Without any configuration the site still works using public feeds (Hacker News, 
 
 ## Features
 
+### AI Tools Directory (NEW)
+✨ **Comprehensive Tool Discovery**
+- Ultra-detailed metadata: pricing breakdowns, feature specs, version tracking, security certifications
+- Advanced search with NLP-powered fuzzy matching
+- Compound faceted filtering: category, pricing, deployment, features, compliance
+- Live comparison engine for side-by-side tool evaluation
+- Downloadable comparison tables and shareable URLs
+- Community reviews, ratings, and Q&A
+- User-generated tool submissions with moderation
+- Contributor leaderboards and badges
+- AI-powered personalized recommendations
+- Real-time analytics and trending tools
+- Interactive visualizations (charts, word clouds)
+- Multi-language support and accessibility features
+- Team collaboration tools (saved lists, shared collections)
+
+### AI News Radar
 ✨ **Interactive Components**
 - AI news digest sourced from community APIs & RSS.
 - Hugging Face model release tracker with likes/downloads.

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools Directory • Comprehensive AI Tool Discovery & Comparison Platform</title>
+    <meta name="description" content="Discover, compare, and evaluate AI tools with advanced filtering, live comparisons, community reviews, and personalized recommendations. The most comprehensive AI tools aggregator.">
+    <meta name="keywords" content="AI tools, AI directory, tool comparison, AI software, machine learning tools, AI aggregator, tool reviews, AI recommendations">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://adaryus.ai/tools.html">
+    <meta property="og:title" content="AI Tools Directory - Adaryus">
+    <meta property="og:description" content="Advanced AI tools aggregator with live comparisons, community reviews, and personalized recommendations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adaryus.ai/tools.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/tools.css">
+    <script defer src="assets/js/config.js"></script>
+    <script defer src="assets/js/main.js"></script>
+    <script defer src="assets/js/tools.js"></script>
+</head>
+<body data-page="tools">
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a class="logo" href="index.html" aria-label="Adaryus AI Tools Directory">
+                <span>Adaryus</span><span class="mono">TOOLS</span>
+            </a>
+            <nav class="nav-links" aria-label="Primary">
+                <a href="index.html">News</a>
+                <a href="tools.html" class="active">AI Tools</a>
+                <a href="#search">Search</a>
+                <a href="#compare">Compare</a>
+                <a href="#trending">Trending</a>
+                <a href="downloads.html">Resources</a>
+            </nav>
+            <a class="nav-cta" href="#submit-tool">Submit a Tool →</a>
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="mobile-menu" id="mobile-menu">
+                <a href="index.html">News</a>
+                <a href="tools.html">AI Tools</a>
+                <a href="#search">Search</a>
+                <a href="#compare">Compare</a>
+                <a href="#trending">Trending</a>
+                <a href="downloads.html">Resources</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero tools-hero" id="hero">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <p class="badge">The Most Comprehensive AI Tools Platform</p>
+                    <h1>Discover, Compare & Evaluate 5000+ AI Tools</h1>
+                    <p class="hero-description">Advanced AI tools aggregator with ultra-detailed metadata, live comparisons, community reviews, personalized recommendations, and real-time analytics. Go beyond basic directories.</p>
+                    <div class="hero-cta">
+                        <a class="btn btn-primary" href="#search">Explore Tools</a>
+                        <a class="btn btn-secondary" href="#compare">Compare Tools</a>
+                    </div>
+                    <dl class="hero-metrics" aria-label="Platform statistics">
+                        <div>
+                            <dt>Tools Listed</dt>
+                            <dd data-counter="5247">0</dd>
+                        </div>
+                        <div>
+                            <dt>User Reviews</dt>
+                            <dd data-counter="12890">0</dd>
+                        </div>
+                        <div>
+                            <dt>Categories</dt>
+                            <dd data-counter="87">0</dd>
+                        </div>
+                        <div>
+                            <dt>Daily Updates</dt>
+                            <dd data-counter="150">0</dd>
+                        </div>
+                    </dl>
+                </div>
+                <aside class="hero-aside tools-highlights" aria-label="Platform highlights">
+                    <h2>What Makes Us Different</h2>
+                    <ul class="highlight-list">
+                        <li>
+                            <span class="icon">🔍</span>
+                            <div>
+                                <strong>Ultra-Detailed Metadata</strong>
+                                <p>Pricing breakdowns, feature specs, version tracking, security certifications</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon">⚡</span>
+                            <div>
+                                <strong>Live Comparison Engine</strong>
+                                <p>Side-by-side tool comparisons with downloadable reports</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon">👥</span>
+                            <div>
+                                <strong>Community-Driven</strong>
+                                <p>User reviews, ratings, Q&A, and contributor rewards</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="icon">🤖</span>
+                            <div>
+                                <strong>AI-Powered Recommendations</strong>
+                                <p>Personalized suggestions based on your needs and history</p>
+                            </div>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Advanced Search & Filtering Section -->
+        <section class="section" id="search" aria-labelledby="search-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Advanced Search</p>
+                <h2 class="section-title" id="search-heading">Find the perfect AI tool for your needs</h2>
+                <p class="section-description">Compound faceted search with NLP-powered suggestions and fuzzy matching</p>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="tool-search-input" placeholder="Search by name, description, features, or use case..." aria-label="Search AI tools">
+                    <button id="search-btn" class="btn btn-primary">Search</button>
+                </div>
+
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <h3>Category</h3>
+                        <div class="filter-options" id="category-filters">
+                            <label><input type="checkbox" value="nlp"> NLP & Text</label>
+                            <label><input type="checkbox" value="cv"> Computer Vision</label>
+                            <label><input type="checkbox" value="audio"> Audio & Speech</label>
+                            <label><input type="checkbox" value="code"> Code Generation</label>
+                            <label><input type="checkbox" value="chat"> Chatbots</label>
+                            <label><input type="checkbox" value="image"> Image Generation</label>
+                            <label><input type="checkbox" value="video"> Video Tools</label>
+                            <label><input type="checkbox" value="analytics"> Analytics</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Pricing Model</h3>
+                        <div class="filter-options" id="pricing-filters">
+                            <label><input type="checkbox" value="free"> Free</label>
+                            <label><input type="checkbox" value="freemium"> Freemium</label>
+                            <label><input type="checkbox" value="paid"> Paid Only</label>
+                            <label><input type="checkbox" value="enterprise"> Enterprise</label>
+                            <label><input type="checkbox" value="opensource"> Open Source</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Deployment</h3>
+                        <div class="filter-options" id="deployment-filters">
+                            <label><input type="checkbox" value="cloud"> Cloud/SaaS</label>
+                            <label><input type="checkbox" value="api"> API</label>
+                            <label><input type="checkbox" value="onprem"> On-Premises</label>
+                            <label><input type="checkbox" value="mobile"> Mobile App</label>
+                            <label><input type="checkbox" value="desktop"> Desktop</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Features</h3>
+                        <div class="filter-options" id="feature-filters">
+                            <label><input type="checkbox" value="multimodal"> Multimodal</label>
+                            <label><input type="checkbox" value="realtime"> Real-time Processing</label>
+                            <label><input type="checkbox" value="batch"> Batch Processing</label>
+                            <label><input type="checkbox" value="customizable"> Customizable</label>
+                            <label><input type="checkbox" value="integration"> Third-party Integrations</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h3>Compliance</h3>
+                        <div class="filter-options" id="compliance-filters">
+                            <label><input type="checkbox" value="gdpr"> GDPR</label>
+                            <label><input type="checkbox" value="hipaa"> HIPAA</label>
+                            <label><input type="checkbox" value="soc2"> SOC 2</label>
+                            <label><input type="checkbox" value="iso27001"> ISO 27001</label>
+                        </div>
+                    </div>
+
+                    <button id="clear-filters" class="btn btn-secondary">Clear All Filters</button>
+                </div>
+            </div>
+
+            <div class="results-header">
+                <p id="results-count">Showing <span id="count">0</span> tools</p>
+                <div class="sort-controls">
+                    <label for="sort-by">Sort by:</label>
+                    <select id="sort-by">
+                        <option value="relevance">Relevance</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="recent">Recently Added</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="tools-grid" class="tools-grid" role="list"></div>
+            <div id="pagination" class="pagination"></div>
+        </section>
+
+        <!-- Live Comparison Engine Section -->
+        <section class="section" id="compare" aria-labelledby="compare-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Comparison Engine</p>
+                <h2 class="section-title" id="compare-heading">Compare AI tools side-by-side</h2>
+                <p class="section-description">Select multiple tools for instant feature-by-feature comparison</p>
+            </div>
+
+            <div class="compare-container">
+                <div class="compare-selection">
+                    <h3>Selected for Comparison (<span id="compare-count">0</span>/4)</h3>
+                    <div id="compare-items" class="compare-items"></div>
+                    <button id="start-comparison" class="btn btn-primary" disabled>Start Comparison</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending & Analytics Section -->
+        <section class="section" id="trending" aria-labelledby="trending-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Analytics & Trends</p>
+                <h2 class="section-title" id="trending-heading">What's trending in AI tools</h2>
+                <p class="section-description">Live analytics showing trending tools, fastest-growing categories, and industry adoption</p>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>Trending This Week</h3>
+                    <div id="trending-tools" class="trending-list"></div>
+                </div>
+
+                <div class="analytics-card">
+                    <h3>Fastest Growing Categories</h3>
+                    <canvas id="category-growth-chart"></canvas>
+                </div>
+
+                <div class="analytics-card">
+                    <h3>Price Trends</h3>
+                    <canvas id="price-trends-chart"></canvas>
+                </div>
+
+                <div class="analytics-card">
+                    <h3>Popular Use Cases</h3>
+                    <div id="use-cases-cloud" class="word-cloud"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Features Section -->
+        <section class="section" id="community" aria-labelledby="community-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Community</p>
+                <h2 class="section-title" id="community-heading">Join the AI tools community</h2>
+                <p class="section-description">Share reviews, ask questions, and help others discover the best tools</p>
+            </div>
+
+            <div class="community-grid">
+                <div class="community-card">
+                    <h3>Top Contributors</h3>
+                    <div id="leaderboard" class="leaderboard"></div>
+                </div>
+
+                <div class="community-card">
+                    <h3>Recent Reviews</h3>
+                    <div id="recent-reviews" class="reviews-list"></div>
+                </div>
+
+                <div class="community-card">
+                    <h3>Popular Questions</h3>
+                    <div id="qa-section" class="qa-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submit Tool Section -->
+        <section class="section" id="submit-tool" aria-labelledby="submit-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Contribute</p>
+                <h2 class="section-title" id="submit-heading">Submit a new AI tool</h2>
+                <p class="section-description">Help the community discover new tools. All submissions are reviewed before publishing.</p>
+            </div>
+
+            <form id="submit-tool-form" class="submit-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tool-name">Tool Name *</label>
+                        <input type="text" id="tool-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tool-url">Website URL *</label>
+                        <input type="url" id="tool-url" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tool-description">Description *</label>
+                    <textarea id="tool-description" rows="4" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tool-category">Category *</label>
+                        <select id="tool-category" required>
+                            <option value="">Select category...</option>
+                            <option value="nlp">NLP & Text</option>
+                            <option value="cv">Computer Vision</option>
+                            <option value="audio">Audio & Speech</option>
+                            <option value="code">Code Generation</option>
+                            <option value="chat">Chatbots</option>
+                            <option value="image">Image Generation</option>
+                            <option value="video">Video Tools</option>
+                            <option value="analytics">Analytics</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tool-pricing">Pricing Model *</label>
+                        <select id="tool-pricing" required>
+                            <option value="">Select pricing...</option>
+                            <option value="free">Free</option>
+                            <option value="freemium">Freemium</option>
+                            <option value="paid">Paid</option>
+                            <option value="enterprise">Enterprise</option>
+                            <option value="opensource">Open Source</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tool-features">Key Features (comma-separated)</label>
+                    <input type="text" id="tool-features" placeholder="e.g., API access, Real-time processing, Custom training">
+                </div>
+
+                <div class="form-group">
+                    <label for="submitter-email">Your Email *</label>
+                    <input type="email" id="submitter-email" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Tool for Review</button>
+            </form>
+        </section>
+
+        <!-- Personalization Section -->
+        <section class="section" id="recommendations" aria-labelledby="recommendations-heading">
+            <div class="section-header">
+                <p class="section-eyebrow">Just For You</p>
+                <h2 class="section-title" id="recommendations-heading">Personalized recommendations</h2>
+                <p class="section-description">AI-powered tool suggestions based on your browsing history and preferences</p>
+            </div>
+
+            <div id="recommended-tools" class="tools-grid" role="list"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <h4>Adaryus AI Tools Directory</h4>
+                <p>The most comprehensive AI tools aggregator with advanced search, live comparisons, community reviews, and personalized recommendations.</p>
+            </div>
+            <div>
+                <h4>Explore</h4>
+                <div class="footer-links">
+                    <a href="#search">Search Tools</a>
+                    <a href="#compare">Compare Tools</a>
+                    <a href="#trending">Trending</a>
+                    <a href="#submit-tool">Submit a Tool</a>
+                </div>
+            </div>
+            <div>
+                <h4>Resources</h4>
+                <div class="footer-links">
+                    <a href="index.html">AI News</a>
+                    <a href="downloads.html">Downloads</a>
+                    <a href="prompts.html">Prompts</a>
+                    <a href="dashboard.html">Dashboard</a>
+                </div>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <p>Email <a href="mailto:build@adaryus.ai">build@adaryus.ai</a> for partnerships or enterprise features.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Comparison Modal -->
+    <div id="comparison-modal" class="modal" role="dialog" aria-labelledby="comparison-modal-title" aria-hidden="true">
+        <div class="modal-content comparison-modal-content">
+            <button class="modal-close" data-close-modal aria-label="Close comparison">×</button>
+            <h2 id="comparison-modal-title">Tool Comparison</h2>
+            <div class="comparison-actions">
+                <button id="download-comparison" class="btn btn-secondary">Download as CSV</button>
+                <button id="share-comparison" class="btn btn-secondary">Share Comparison</button>
+            </div>
+            <div id="comparison-table-container" class="comparison-table-container"></div>
+        </div>
+    </div>
+
+    <!-- Tool Detail Modal -->
+    <div id="tool-detail-modal" class="modal" role="dialog" aria-labelledby="tool-detail-title" aria-hidden="true">
+        <div class="modal-content tool-detail-content">
+            <button class="modal-close" data-close-modal aria-label="Close tool details">×</button>
+            <div id="tool-detail-container"></div>
+        </div>
+    </div>
+</body>
+</html>
