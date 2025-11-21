@@ -293,7 +293,7 @@ class AutomatedDealTester {
     scheduleTest(deal, options = {}) {
         if (!deal.merchant.domain) {
             console.log(`Cannot schedule test for ${deal.id}: no merchant domain`);
-            return;
+            return { success: false, reason: 'no_merchant_domain' };
         }
 
         const testId = `test_${deal.id}_${Date.now()}`;
@@ -309,6 +309,7 @@ class AutomatedDealTester {
         });
 
         console.log(`Scheduled automated test for deal ${deal.id}`);
+        return { success: true, testId };
     }
 
     // Simulate running automated test

@@ -48,9 +48,11 @@ class UserPreferences {
         const { start, end } = this.quietHours;
         
         if (start < end) {
-            return hour >= start || hour < end;
-        } else {
+            // Normal case: e.g., 9am to 5pm - quiet during this range
             return hour >= start && hour < end;
+        } else {
+            // Overnight case: e.g., 10pm to 7am - quiet during these hours
+            return hour >= start || hour < end;
         }
     }
 }

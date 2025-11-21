@@ -374,7 +374,7 @@ class ChaosEngineer {
             // Randomly drop events
             if (Math.random() < this.config.dropProbability) {
                 console.warn('Chaos: Dropped event', event.type);
-                return;
+                return Promise.resolve(); // Return resolved promise for API compatibility
             }
 
             // Randomly delay events

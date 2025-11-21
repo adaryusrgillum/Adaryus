@@ -227,8 +227,12 @@ class DealSystemOrchestrator {
 
         try {
             // Simulate polling (in real implementation, would call actual API)
-            const hasChanges = Math.random() > 0.6; // 40% chance of changes
-            const changeCount = hasChanges ? Math.floor(Math.random() * 5) + 1 : 0;
+            // Configuration for testing: probability and max changes
+            const changeProbability = this.config.pollChangeProbability || 0.4;
+            const maxChanges = this.config.pollMaxChanges || 5;
+            
+            const hasChanges = Math.random() < changeProbability;
+            const changeCount = hasChanges ? Math.floor(Math.random() * maxChanges) + 1 : 0;
 
             // Record poll result
             this.pollingManager.recordPoll(provider.id, hasChanges, changeCount);

@@ -53,9 +53,25 @@ const EventSchemaRegistry = {
     transform(event, targetVersion) {
         if (event.version === targetVersion) return event;
         
-        // Add transformation logic here for version migrations
-        console.log(`Transforming event from ${event.version} to ${targetVersion}`);
-        return { ...event, version: targetVersion };
+        // Implement version-specific transformations
+        let transformed = { ...event };
+        
+        // Example: v1 to v2 transformation (when v2 is added)
+        // if (event.version === 'v1' && targetVersion === 'v2') {
+        //     transformed.newField = transformed.oldField || defaultValue;
+        //     delete transformed.oldField;
+        // }
+        
+        transformed.version = targetVersion;
+        console.log(`Transformed event from ${event.version} to ${targetVersion}`);
+        
+        // Re-validate after transformation
+        if (!this.validate(transformed)) {
+            console.error('Transformation resulted in invalid schema');
+            return null;
+        }
+        
+        return transformed;
     }
 };
 
