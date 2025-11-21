@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deal Aggregation System - Architecture Demo | Adaryus</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-section h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .demo-section h3 {
+            color: #4a9eff;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .demo-card {
+            background: rgba(0, 212, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .demo-card h4 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-card p {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .demo-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .demo-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .demo-btn.danger {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .demo-btn.success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .demo-output {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #0f0;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 1rem 0;
+            border: 1px solid #333;
+        }
+
+        .demo-output .log-entry {
+            margin: 0.25rem 0;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .demo-output .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .demo-output .log-error {
+            color: #ff4444;
+        }
+
+        .demo-output .log-warning {
+            color: #ffaa00;
+        }
+
+        .demo-output .log-info {
+            color: #00d4ff;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-indicator.active {
+            background: #0f0;
+            box-shadow: 0 0 8px #0f0;
+        }
+
+        .status-indicator.inactive {
+            background: #666;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d4ff;
+            margin: 0.5rem 0;
+        }
+
+        .metric-label {
+            color: #aaa;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .architecture-diagram {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .flow-step {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 3px solid #00d4ff;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+        }
+
+        .flow-step strong {
+            color: #00d4ff;
+        }
+
+        pre {
+            background: #1a1a2e;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            border: 1px solid #333;
+        }
+
+        code {
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body data-page="deal-demo">
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Adaryus</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="deal-system-demo.html" class="active">Deal System</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="demo-container">
+        <header style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">
+                Student Deal Aggregation System
+            </h1>
+            <p style="color: #aaa; font-size: 1.1rem;">
+                Event-Driven Architecture for Real-Time Deal Distribution
+            </p>
+        </header>
+
+        <!-- System Status -->
+        <section class="demo-section">
+            <h2>
+                <span class="status-indicator" id="systemStatus"></span>
+                System Status
+            </h2>
+            <div class="demo-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Events Processed</div>
+                    <div class="metric-value" id="metricEvents">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Active Connections</div>
+                    <div class="metric-value" id="metricConnections">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Deals in Queue</div>
+                    <div class="metric-value" id="metricQueue">0</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">System Health</div>
+                    <div class="metric-value" id="metricHealth">100%</div>
+                </div>
+            </div>
+
+            <div class="demo-controls">
+                <button class="demo-btn success" id="btnStart">Start System</button>
+                <button class="demo-btn danger" id="btnStop" disabled>Stop System</button>
+                <button class="demo-btn" id="btnStatus">Get Status</button>
+                <button class="demo-btn" id="btnClearLog">Clear Log</button>
+            </div>
+        </section>
+
+        <!-- Architecture Overview -->
+        <section class="demo-section">
+            <h2>📐 Architecture Overview</h2>
+            <p style="color: #aaa; margin-bottom: 1rem;">
+                This system implements a comprehensive event-driven architecture for aggregating, 
+                normalizing, and distributing student discount deals across multiple providers.
+            </p>
+
+            <div class="architecture-diagram">
+                <h3>Event Flow</h3>
+                <div class="flow-step">
+                    <strong>1. Ingestion</strong> → Webhooks and adaptive polling collect deals from providers
+                </div>
+                <div class="flow-step">
+                    <strong>2. Normalization</strong> → Deal data standardized, duplicates detected
+                </div>
+                <div class="flow-step">
+                    <strong>3. Verification</strong> → Quality checks and merchant validation
+                </div>
+                <div class="flow-step">
+                    <strong>4. Distribution</strong> → Event bus publishes changes to subscribers
+                </div>
+                <div class="flow-step">
+                    <strong>5. Notification</strong> → Intelligent filtering and user notifications
+                </div>
+                <div class="flow-step">
+                    <strong>6. Analytics</strong> → Track views, clicks, and redemptions
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Demos -->
+        <section class="demo-section">
+            <h2>🎮 Interactive Demos</h2>
+            
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h4>1. Intelligent Polling</h4>
+                    <p>Adaptive polling adjusts frequency based on historical patterns and provider behavior.</p>
+                    <button class="demo-btn" id="btnDemoPolling">Run Demo</button>
+                </div>
+
+                <div class="demo-card">
+                    <h4>2. Event Schema</h4>
+                    <p>Versioned event schemas ensure backward compatibility and graceful evolution.</p>
+                    <button class="demo-btn" id="btnDemoEvents">Run Demo</button>
+                </div>
+
+                <div class="demo-card">
+                    <h4>3. Deduplication</h4>
+                    <p>Fuzzy matching identifies duplicate deals across multiple providers.</p>
+                    <button class="demo-btn" id="btnDemoDedup">Run Demo</button>
+                </div>
+
+                <div class="demo-card">
+                    <h4>4. Notifications</h4>
+                    <p>Smart filtering with fatigue protection and timing optimization.</p>
+                    <button class="demo-btn" id="btnDemoNotif">Run Demo</button>
+                </div>
+
+                <div class="demo-card">
+                    <h4>5. Quality Control</h4>
+                    <p>Verification queue and crowdsourced validation ensure deal quality.</p>
+                    <button class="demo-btn" id="btnDemoQuality">Run Demo</button>
+                </div>
+
+                <div class="demo-card">
+                    <h4>6. Circuit Breaker</h4>
+                    <p>Graceful degradation when providers fail or become unavailable.</p>
+                    <button class="demo-btn" id="btnDemoCircuit">Run Demo</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Console Output -->
+        <section class="demo-section">
+            <h2>📊 Console Output</h2>
+            <div class="demo-output" id="consoleOutput">
+                <div class="log-entry log-info">System ready. Click "Start System" to begin...</div>
+            </div>
+        </section>
+
+        <!-- Technical Details -->
+        <section class="demo-section">
+            <h2>⚙️ Technical Implementation</h2>
+            
+            <h3>Key Features</h3>
+            <ul style="color: #aaa; line-height: 2;">
+                <li><strong style="color: #00d4ff;">Event Schema Versioning:</strong> v1 schemas with transformation support</li>
+                <li><strong style="color: #00d4ff;">Adaptive Polling:</strong> Exponential backoff and pattern recognition</li>
+                <li><strong style="color: #00d4ff;">Merchant Resolution:</strong> Fuzzy matching with Levenshtein distance</li>
+                <li><strong style="color: #00d4ff;">Notification Engine:</strong> Multi-channel with fatigue protection</li>
+                <li><strong style="color: #00d4ff;">Quality Control:</strong> Automated verification and crowdsourced validation</li>
+                <li><strong style="color: #00d4ff;">Circuit Breakers:</strong> Provider failure isolation</li>
+                <li><strong style="color: #00d4ff;">Analytics:</strong> Real-time tracking and trending</li>
+                <li><strong style="color: #00d4ff;">Developer Tools:</strong> Event mocking, replay, and chaos engineering</li>
+            </ul>
+
+            <h3>Technology Stack</h3>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h4>Event Bus</h4>
+                    <p>Custom event system with subscription filtering and priority</p>
+                </div>
+                <div class="demo-card">
+                    <h4>Data Models</h4>
+                    <p>JavaScript classes with deduplication hashing</p>
+                </div>
+                <div class="demo-card">
+                    <h4>Storage</h4>
+                    <p>LocalStorage for caching with TTL management</p>
+                </div>
+                <div class="demo-card">
+                    <h4>Testing</h4>
+                    <p>Mock generators and integration test framework</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Examples -->
+        <section class="demo-section">
+            <h2>💻 Code Examples</h2>
+            
+            <h3>Initialize System</h3>
+            <pre><code>const orchestrator = new DealSystemOrchestrator({
+    enablePolling: true,
+    enableNotifications: true,
+    enableAnalytics: true,
+    pollingInterval: 5000
+});
+
+await orchestrator.initialize();
+await orchestrator.start();</code></pre>
+
+            <h3>Register User</h3>
+            <pre><code>orchestrator.registerUser('user123', {
+    categories: ['technology', 'fashion'],
+    minDiscountPercentage: 15,
+    campusId: 'campus_stanford',
+    maxDailyNotifications: 10
+});</code></pre>
+
+            <h3>Track Analytics</h3>
+            <pre><code>orchestrator.trackEvent('view', 'deal_123', 'user123', {
+    campusId: 'campus_stanford',
+    source: 'mobile_app'
+});
+
+orchestrator.trackEvent('click', 'deal_123', 'user123');
+orchestrator.trackEvent('redemption', 'deal_123', 'user123');</code></pre>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 2rem; color: #666;">
+        <p>&copy; 2025 Adaryus. Event-Driven Deal Aggregation Architecture.</p>
+    </footer>
+
+    <!-- Load all system scripts -->
+    <script src="assets/js/deal-system.js"></script>
+    <script src="assets/js/notification-system.js"></script>
+    <script src="assets/js/quality-system.js"></script>
+    <script src="assets/js/dev-tools.js"></script>
+    <script src="assets/js/deal-orchestrator.js"></script>
+
+    <!-- Demo interaction script -->
+    <script>
+        let orchestrator = null;
+        const output = document.getElementById('consoleOutput');
+
+        function log(message, type = 'info') {
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            output.appendChild(entry);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function updateMetrics() {
+            if (!orchestrator) return;
+
+            const status = orchestrator.getStatus();
+            
+            document.getElementById('metricEvents').textContent = 
+                orchestrator.eventBus.eventHistory.length;
+            
+            document.getElementById('metricConnections').textContent = 
+                status.connections?.activeConnections || 0;
+            
+            document.getElementById('metricQueue').textContent = 
+                status.verification?.pending || 0;
+            
+            document.getElementById('metricHealth').textContent = 
+                Math.round((status.health?.overall || 1) * 100) + '%';
+        }
+
+        // System controls
+        document.getElementById('btnStart').addEventListener('click', async () => {
+            log('Initializing Deal System Orchestrator...', 'info');
+            
+            orchestrator = new DealSystemOrchestrator({
+                enablePolling: true,
+                enableNotifications: true,
+                enableAnalytics: true,
+                enableQualityControl: true,
+                pollingInterval: 5000
+            });
+
+            await orchestrator.initialize();
+            await orchestrator.start();
+
+            log('System started successfully', 'info');
+            
+            document.getElementById('systemStatus').className = 'status-indicator active';
+            document.getElementById('btnStart').disabled = true;
+            document.getElementById('btnStop').disabled = false;
+
+            // Register demo user
+            orchestrator.registerUser('demo_user', {
+                categories: ['technology', 'fashion'],
+                minDiscountPercentage: 10,
+                maxDailyNotifications: 10
+            });
+
+            log('Registered demo user', 'info');
+
+            // Update metrics periodically
+            setInterval(updateMetrics, 1000);
+        });
+
+        document.getElementById('btnStop').addEventListener('click', () => {
+            if (orchestrator) {
+                orchestrator.stop();
+                log('System stopped', 'warning');
+                
+                document.getElementById('systemStatus').className = 'status-indicator inactive';
+                document.getElementById('btnStart').disabled = false;
+                document.getElementById('btnStop').disabled = true;
+            }
+        });
+
+        document.getElementById('btnStatus').addEventListener('click', () => {
+            if (!orchestrator) {
+                log('System not started', 'error');
+                return;
+            }
+
+            const status = orchestrator.getStatus();
+            log(`System Status: ${JSON.stringify(status, null, 2)}`, 'info');
+        });
+
+        document.getElementById('btnClearLog').addEventListener('click', () => {
+            output.innerHTML = '<div class="log-entry log-info">Log cleared</div>';
+        });
+
+        // Demo buttons
+        document.getElementById('btnDemoPolling').addEventListener('click', () => {
+            if (!orchestrator) {
+                log('Please start the system first', 'error');
+                return;
+            }
+
+            log('=== Intelligent Polling Demo ===', 'info');
+            
+            const providers = orchestrator.pollingManager.pollingState;
+            providers.forEach((state, providerId) => {
+                log(`Provider: ${providerId}`, 'info');
+                log(`  Interval: ${(state.currentInterval / 1000).toFixed(1)}s`, 'info');
+                log(`  No changes: ${state.consecutiveNoChanges}`, 'info');
+            });
+        });
+
+        document.getElementById('btnDemoEvents').addEventListener('click', async () => {
+            if (!orchestrator) {
+                log('Please start the system first', 'error');
+                return;
+            }
+
+            log('=== Event Schema Demo ===', 'info');
+            
+            const mockGen = new DevTools.EventMockGenerator();
+            const event = mockGen.generateDealCreatedEvent();
+            
+            log(`Generated event: ${event.type}`, 'info');
+            log(`Schema version: ${event.version}`, 'info');
+            log(`Event valid: ${EventSchemaRegistry.validate(event)}`, 'info');
+            
+            await orchestrator.eventBus.publish(event);
+            log('Event published to bus', 'info');
+        });
+
+        document.getElementById('btnDemoDedup').addEventListener('click', () => {
+            if (!orchestrator) {
+                log('Please start the system first', 'error');
+                return;
+            }
+
+            log('=== Deduplication Demo ===', 'info');
+            
+            const mockGen = new DevTools.EventMockGenerator();
+            const deal1 = mockGen.generateDeal({ merchant: { name: 'Apple', domain: 'apple.com' } });
+            const deal2 = mockGen.generateDeal({ merchant: { name: 'Apple Inc', domain: 'apple.com' } });
+            
+            const result1 = orchestrator.deduplicator.checkAndAdd(deal1);
+            log(`Deal 1: ${result1.isDuplicate ? 'Duplicate' : 'New'}`, 'info');
+            
+            const result2 = orchestrator.deduplicator.checkAndAdd(deal2);
+            log(`Deal 2: ${result2.isDuplicate ? 'Duplicate' : 'New'}`, 'info');
+            log(`Merchants matched by domain`, 'info');
+        });
+
+        document.getElementById('btnDemoNotif').addEventListener('click', async () => {
+            if (!orchestrator) {
+                log('Please start the system first', 'error');
+                return;
+            }
+
+            log('=== Notification Demo ===', 'info');
+            
+            const mockGen = new DevTools.EventMockGenerator();
+            const deal = mockGen.generateDeal({
+                category: 'technology',
+                discount: { type: 'percentage', value: 50, description: '50% off' }
+            });
+            
+            const event = { version: 'v1', type: 'deal.created', id: deal.id, deal, timestamp: Date.now() };
+            
+            const decisions = await orchestrator.notificationEngine.processDealChange(event, deal);
+            log(`Notification decisions: ${decisions.length}`, 'info');
+            
+            if (decisions.length > 0) {
+                log(`Strategy: ${decisions[0].strategy}`, 'info');
+                log(`Priority: ${decisions[0].priority}`, 'info');
+            }
+        });
+
+        document.getElementById('btnDemoQuality').addEventListener('click', () => {
+            if (!orchestrator) {
+                log('Please start the system first', 'error');
+                return;
+            }
+
+            log('=== Quality Control Demo ===', 'info');
+            
+            const mockGen = new DevTools.EventMockGenerator();
+            const deal = mockGen.generateDeal({
+                discount: { type: 'percentage', value: 95, description: '95% off' }
+            });
+            
+            const needsVerification = orchestrator.verificationQueue.needsVerification(deal);
+            log(`Needs verification: ${needsVerification.needs}`, 'info');
+            
+            if (needsVerification.needs) {
+                needsVerification.reasons.forEach(r => {
+                    log(`  Reason: ${r.reason} (priority: ${r.priority})`, 'warning');
+                });
+                
+                orchestrator.verificationQueue.addToQueue(deal, needsVerification.reasons[0].reason);
+                log('Added to verification queue', 'info');
+            }
+        });
+
+        document.getElementById('btnDemoCircuit').addEventListener('click', () => {
+            if (!orchestrator) {
+                log('Please start the system first', 'error');
+                return;
+            }
+
+            log('=== Circuit Breaker Demo ===', 'info');
+            
+            // Simulate failures
+            for (let i = 0; i < 5; i++) {
+                orchestrator.degradationManager.recordFailure('student-beans');
+                log(`Failure ${i + 1} recorded for student-beans`, 'warning');
+            }
+            
+            const canCall = orchestrator.degradationManager.canCallProvider('student-beans');
+            log(`Can call provider: ${canCall}`, canCall ? 'info' : 'error');
+            
+            const health = orchestrator.degradationManager.getHealthStatus();
+            log(`System health: ${Math.round(health.overall * 100)}%`, 'info');
+        });
+
+        // Set initial status
+        document.getElementById('systemStatus').className = 'status-indicator inactive';
+    </script>
+</body>
+</html>
