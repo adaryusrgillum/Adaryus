@@ -1,2 +1,7 @@
 # Optional local override (not committed)
 assets/js/config.local.js
+
+# Backup files
+*.bak
+*.backup
+
