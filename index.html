@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adaryus R. Gillum | AI-Augmented Strategist | Neural Command Center</title>
+  <meta name="description" content="AI Marketing Strategist bridging Human Intuition and Machine Precision. M.S. AI Marketing candidate at WVU specializing in data science, drone operations, VR/AR integration, and strategic marketing.">
+  <meta name="keywords" content="AI Marketing, Data Science, Drone Pilot, LiDAR, VR/AR, Python, Marketing Strategy, NLP, Machine Learning">
+  <meta name="author" content="Adaryus R. Gillum">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #050810;
+      --bg-primary: #0a0e18;
+      --bg-secondary: #0d1220;
+      --bg-card: rgba(255, 255, 255, 0.02);
+      --bg-card-hover: rgba(255, 255, 255, 0.04);
+      --text-primary: #e8ecf4;
+      --text-secondary: #9ca3b4;
+      --text-muted: #6b7280;
+      --accent-cyan: #00f0ff;
+      --accent-blue: #0088ff;
+      --accent-purple: #8b5cf6;
+      --accent-green: #10b981;
+      --accent-orange: #f59e0b;
+      --accent-pink: #ec4899;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-accent: rgba(0, 240, 255, 0.2);
+      --gradient-primary: linear-gradient(135deg, #00f0ff 0%, #0088ff 50%, #8b5cf6 100%);
+      --gradient-card: linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, rgba(139, 92, 246, 0.02) 100%);
+      --shadow-glow: 0 0 40px rgba(0, 240, 255, 0.15);
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-cyan); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+    
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+      50% { transform: translateY(-25px) scale(1.1); opacity: 0.7; }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(0, 240, 255, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(0, 240, 255, 0.6); }
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    /* Grid Background */
+    .grid-background {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    
+    .grid-background::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 240, 255, 0.08) 0%, transparent 50%);
+    }
+    
+    /* Particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      animation: float 5s ease-in-out infinite;
+    }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    
+    nav.scrolled {
+      background: rgba(5, 8, 16, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom-color: var(--border-accent);
+    }
+    
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: var(--gradient-primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    .logo-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 2px;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+    
+    .nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      letter-spacing: 0.5px;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent-cyan);
+      background: rgba(0, 240, 255, 0.1);
+    }
+    
+    .nav-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 10px 20px;
+      background: var(--gradient-primary);
+      color: var(--bg-deep);
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-glow);
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 60px 80px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .hero-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    
+    .hero-content {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--border-accent);
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    
+    .hero-badge-dot {
+      width: 8px; height: 8px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    .hero-badge-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent-cyan);
+      letter-spacing: 1px;
+    }
+    
+    .hero-name {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+    
+    .hero-title {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    
+    .hero-title-line1 {
+      display: block;
+      color: var(--text-primary);
+    }
+    
+    .hero-title-line2 {
+      display: block;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hero-subtitle {
+      font-size: 20px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 540px;
+    }
+    
+    .hero-subtitle .highlight {
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+    
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 40px;
+      padding: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+    }
+    
+    .hero-stat {
+      text-align: center;
+    }
+    
+    .hero-stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+    
+    .hero-stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      background: var(--gradient-primary);
+      color: var(--bg-deep);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-glow);
+    }
+    
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      background: transparent;
+      border: 1px solid var(--border-accent);
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(0, 240, 255, 0.1);
+      border-color: var(--accent-cyan);
+    }
+    
+    .hero-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .tech-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 6px 12px;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      border-radius: 6px;
+      color: var(--accent-cyan);
+    }
+    
+    /* Hero Visual */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .hero-visual-container {
+      position: relative;
+      width: 450px;
+      height: 450px;
+    }
+    
+    .hero-orbit {
+      position: absolute;
+      border: 1px solid rgba(0, 240, 255, 0.1);
+      border-radius: 50%;
+      animation: rotate 30s linear infinite;
+    }
+    
+    .hero-orbit:nth-child(1) { width: 100%; height: 100%; animation-duration: 40s; }
+    .hero-orbit:nth-child(2) { width: 80%; height: 80%; top: 10%; left: 10%; animation-duration: 30s; animation-direction: reverse; }
+    .hero-orbit:nth-child(3) { width: 60%; height: 60%; top: 20%; left: 20%; animation-duration: 25s; }
+    
+    .hero-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px; height: 120px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 3s ease-in-out infinite;
+      box-shadow: var(--shadow-glow);
+    }
+    
+    .hero-center-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--bg-deep);
+      text-align: center;
+      line-height: 1.3;
+    }
+    
+    .orbit-node {
+      position: absolute;
+      width: 50px; height: 50px;
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent-cyan);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    }
+    
+    .orbit-node:nth-child(4) { top: -25px; left: 50%; transform: translateX(-50%); }
+    .orbit-node:nth-child(5) { top: 50%; right: -25px; transform: translateY(-50%); }
+    .orbit-node:nth-child(6) { bottom: -25px; left: 50%; transform: translateX(-50%); }
+    .orbit-node:nth-child(7) { top: 50%; left: -25px; transform: translateY(-50%); }
+    .orbit-node:nth-child(8) { top: 10%; right: 10%; }
+    .orbit-node:nth-child(9) { bottom: 10%; right: 10%; }
+    
+    /* Section Styles */
+    section {
+      padding: 100px 60px;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .section-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent-cyan);
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+      display: inline-block;
+      padding: 8px 16px;
+      background: rgba(0, 240, 255, 0.1);
+      border-radius: 100px;
+    }
+    
+    .section-title {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* Certifications Banner */
+    .cert-banner {
+      background: linear-gradient(90deg, rgba(0, 240, 255, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+      border-top: 1px solid var(--border-accent);
+      border-bottom: 1px solid var(--border-accent);
+      padding: 16px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 10;
+    }
+    
+    .cert-track {
+      display: flex;
+      gap: 48px;
+      animation: scroll 60s linear infinite;
+      width: max-content;
+    }
+    
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+    }
+    
+    .cert-icon { font-size: 18px; }
+    
+    .cert-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    
+    /* Education Section */
+    .education-section {
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
+    }
+    
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+    
+    .education-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .education-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-4px);
+    }
+    
+    .education-card.current::before {
+      content: 'IN PROGRESS';
+      position: absolute;
+      top: 24px; right: -40px;
+      background: var(--gradient-primary);
+      color: var(--bg-deep);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 6px 50px;
+      transform: rotate(45deg);
+      letter-spacing: 1px;
+    }
+    
+    .edu-icon {
+      width: 60px; height: 60px;
+      background: var(--gradient-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    
+    .edu-degree {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .edu-school {
+      font-size: 16px;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+    }
+    
+    .edu-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    
+    .edu-focus {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .edu-focus-tag {
+      font-size: 12px;
+      padding: 6px 12px;
+      background: rgba(0, 240, 255, 0.08);
+      border-radius: 6px;
+      color: var(--text-secondary);
+    }
+    
+    /* Coursework */
+    .coursework-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 40px;
+    }
+    
+    .coursework-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    
+    .coursework-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .coursework-tabs {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .coursework-tab {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .coursework-tab:hover, .coursework-tab.active {
+      background: rgba(0, 240, 255, 0.1);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+    
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    
+    .course-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    
+    .course-item:hover {
+      background: rgba(0, 240, 255, 0.05);
+    }
+    
+    .course-name {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    
+    .course-grade {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    
+    .grade-a { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+    .grade-b { background: rgba(0, 136, 255, 0.2); color: var(--accent-blue); }
+    .grade-c { background: rgba(245, 158, 11, 0.2); color: var(--accent-orange); }
+    .grade-cr { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); }
+    
+    /* Certifications Section */
+    .certs-section {
+      background: var(--bg-primary);
+    }
+    
+    .certs-categories {
+      display: grid;
+      gap: 40px;
+    }
+    
+    .cert-category {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+    }
+    
+    .cert-category-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .cert-category-icon {
+      width: 50px; height: 50px;
+      background: var(--gradient-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .cert-category-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .cert-category-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--accent-cyan);
+    }
+    
+    .cert-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    
+    .cert-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    
+    .cert-card:hover {
+      background: rgba(0, 240, 255, 0.05);
+      transform: translateX(4px);
+    }
+    
+    .cert-card-icon {
+      width: 40px; height: 40px;
+      background: var(--gradient-card);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    
+    .cert-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .cert-card-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .cert-card-issuer {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .cert-card-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent-cyan);
+      white-space: nowrap;
+    }
+    
+    /* Experience Section */
+    .experience-section {
+      background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-deep) 100%);
+    }
+    
+    .experience-timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+    
+    .experience-timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
+    }
+    
+    .experience-item {
+      position: relative;
+      margin-bottom: 40px;
+      padding: 32px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .experience-item:hover {
+      border-color: var(--border-accent);
+      transform: translateX(8px);
+    }
+    
+    .experience-item::before {
+      content: '';
+      position: absolute;
+      left: -33px;
+      top: 40px;
+      width: 16px; height: 16px;
+      background: var(--accent-cyan);
+      border-radius: 50%;
+      border: 3px solid var(--bg-deep);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    }
+    
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    
+    .exp-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    
+    .exp-company {
+      font-size: 16px;
+      color: var(--accent-cyan);
+    }
+    
+    .exp-meta {
+      text-align: right;
+    }
+    
+    .exp-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent-cyan);
+      margin-bottom: 4px;
+    }
+    
+    .exp-location {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    
+    .exp-description {
+      margin-bottom: 20px;
+    }
+    
+    .exp-bullet {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    .exp-bullet::before {
+      content: '▹';
+      color: var(--accent-cyan);
+      flex-shrink: 0;
+    }
+    
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .exp-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 6px 12px;
+      background: rgba(0, 240, 255, 0.08);
+      border-radius: 6px;
+      color: var(--text-secondary);
+    }
+    
+    /* Projects Section */
+    .projects-section {
+      background: var(--bg-deep);
+    }
+    
+    .featured-project {
+      background: var(--gradient-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 24px;
+      padding: 48px;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .featured-project::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .featured-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 8px 16px;
+      background: var(--gradient-primary);
+      color: var(--bg-deep);
+      border-radius: 100px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    
+    .featured-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .featured-subtitle {
+      font-size: 18px;
+      color: var(--accent-cyan);
+      margin-bottom: 32px;
+    }
+    
+    .featured-stats {
+      display: flex;
+      gap: 48px;
+      margin-bottom: 32px;
+    }
+    
+    .featured-stat-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+    
+    .featured-stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .project-phases {
+      display: grid;
+      gap: 24px;
+    }
+    
+    .project-phase {
+      display: flex;
+      gap: 24px;
+      padding: 24px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 16px;
+      border-left: 4px solid var(--accent-cyan);
+    }
+    
+    .phase-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--bg-deep);
+      width: 40px; height: 40px;
+      background: var(--accent-cyan);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .phase-content { flex: 1; }
+    
+    .phase-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .phase-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    /* Project Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 28px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .project-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glow);
+    }
+    
+    .project-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+    
+    .project-card-icon {
+      width: 48px; height: 48px;
+      background: var(--gradient-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .project-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 6px 12px;
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--accent-cyan);
+      border-radius: 6px;
+      letter-spacing: 1px;
+    }
+    
+    .project-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    
+    .project-card-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    
+    .project-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .project-card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      border-radius: 4px;
+    }
+    
+    /* Skills Section */
+    .skills-section {
+      background: var(--bg-primary);
+    }
+    
+    .skills-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    
+    .skills-column h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--accent-cyan);
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    
+    .skill-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .skill-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .skill-bar-header {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .skill-bar-name {
+      font-size: 14px;
+      color: var(--text-primary);
+    }
+    
+    .skill-bar-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent-cyan);
+    }
+    
+    .skill-bar-track {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .skill-bar-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: 3px;
+      transition: width 1s ease-out;
+    }
+    
+    .skill-tags-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .skill-tag-item {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 10px 16px;
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+    
+    .skill-tag-item:hover {
+      background: rgba(0, 240, 255, 0.1);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+    
+    /* Specializations */
+    .specializations-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+    
+    .spec-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .spec-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glow);
+    }
+    
+    .spec-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    
+    .spec-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    
+    .spec-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    
+    /* Contact Section */
+    .contact-section {
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-primary) 100%);
+    }
+    
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .contact-info h2 {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    
+    .contact-info p {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .contact-item-icon {
+      width: 50px; height: 50px;
+      background: var(--gradient-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    
+    .contact-item-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .contact-item-value {
+      font-size: 16px;
+      color: var(--text-primary);
+    }
+    
+    .contact-item-value a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    
+    .contact-item-value a:hover { opacity: 0.8; }
+    
+    .contact-links {
+      display: flex;
+      gap: 16px;
+    }
+    
+    .contact-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px; height: 50px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      font-size: 20px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    
+    .contact-link:hover {
+      background: rgba(0, 240, 255, 0.1);
+      border-color: var(--accent-cyan);
+      transform: translateY(-4px);
+    }
+    
+    .contact-visual {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 40px;
+    }
+    
+    .contact-cta-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    
+    .contact-cta-text {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    
+    .contact-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: var(--gradient-primary);
+      color: var(--bg-deep);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+    
+    .contact-cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-glow);
+    }
+    
+    /* Footer */
+    footer {
+      padding: 40px 60px;
+      border-top: 1px solid var(--border-subtle);
+      position: relative;
+      z-index: 10;
+    }
+    
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .footer-text {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    
+    .footer-ethics {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .hero-container { grid-template-columns: 1fr; text-align: center; }
+      .hero-visual { display: none; }
+      .hero-stats { justify-content: center; }
+      .hero-actions { justify-content: center; }
+      .hero-tech { justify-content: center; }
+      .course-grid { grid-template-columns: repeat(2, 1fr); }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-container { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 768px) {
+      section { padding: 60px 24px; }
+      nav { padding: 12px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .hero-title { font-size: 36px; }
+      .section-title { font-size: 32px; }
+      .education-grid { grid-template-columns: 1fr; }
+      .skills-container { grid-template-columns: 1fr; }
+      .specializations-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .course-grid { grid-template-columns: 1fr; }
+      .featured-stats { flex-direction: column; gap: 20px; }
+      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-background"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- Navigation -->
+  <nav id="nav">
+    <div class="nav-logo">
+      <div class="logo-icon">◈</div>
+      <span class="logo-text">ADARYUS</span>
+    </div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Get In Touch</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="about">
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          <span class="hero-badge-text">M.S. AI MARKETING @ WVU</span>
+        </div>
+        
+        <div class="hero-name">Adaryus R. Gillum</div>
+        
+        <h1 class="hero-title">
+          <span class="hero-title-line1">The AI-Augmented</span>
+          <span class="hero-title-line2">Strategist</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+          Bridging <span class="highlight">Human Intuition</span> and <span class="highlight">Machine Precision</span> through data science, spatial computing, and strategic marketing.
+        </p>
+        
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value">250+</div>
+            <div class="hero-stat-label">Flight Hours</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">35+</div>
+            <div class="hero-stat-label">Certifications</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">16K+</div>
+            <div class="hero-stat-label">Photos Taken</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value">3.17</div>
+            <div class="hero-stat-label">GPA</div>
+          </div>
+        </div>
+        
+        <div class="hero-actions">
+          <a href="#projects" class="btn-primary">
+            <span>◉</span> View Case Studies
+          </a>
+          <a href="resume.pdf" class="btn-secondary">
+            <span>↓</span> Download Resume
+          </a>
+        </div>
+        
+        <div class="hero-tech">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">R</span>
+          <span class="tech-tag">SPSS/SAS</span>
+          <span class="tech-tag">Tableau</span>
+          <span class="tech-tag">K-Means</span>
+          <span class="tech-tag">NLP</span>
+          <span class="tech-tag">LiDAR</span>
+          <span class="tech-tag">VR/AR</span>
+          <span class="tech-tag">GIS/CAD</span>
+          <span class="tech-tag">LLMs</span>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="hero-visual-container">
+          <div class="hero-orbit"></div>
+          <div class="hero-orbit"></div>
+          <div class="hero-orbit"></div>
+          <div class="orbit-node">🛸</div>
+          <div class="orbit-node">📊</div>
+          <div class="orbit-node">🧠</div>
+          <div class="orbit-node">🎯</div>
+          <div class="orbit-node">🔬</div>
+          <div class="orbit-node">💡</div>
+          <div class="hero-center">
+            <div class="hero-center-text">AI<br>STRATEGIST</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Banner -->
+  <div class="cert-banner">
+    <div class="cert-track">
+      <div class="cert-item"><span class="cert-icon">✈️</span><span class="cert-name">FAA Part 107</span></div>
+      <div class="cert-item"><span class="cert-icon">🛸</span><span class="cert-name">Transport Canada RPAS</span></div>
+      <div class="cert-item"><span class="cert-icon">📊</span><span class="cert-name">Google Analytics 4</span></div>
+      <div class="cert-item"><span class="cert-icon">🔍</span><span class="cert-name">Google Ads Search</span></div>
+      <div class="cert-item"><span class="cert-icon">🍎</span><span class="cert-name">Apple Search Ads</span></div>
+      <div class="cert-item"><span class="cert-icon">📱</span><span class="cert-name">HubSpot SEO I & II</span></div>
+      <div class="cert-item"><span class="cert-icon">📣</span><span class="cert-name">HubSpot Social Media</span></div>
+      <div class="cert-item"><span class="cert-icon">🦉</span><span class="cert-name">Hootsuite Platform</span></div>
+      <div class="cert-item"><span class="cert-icon">💼</span><span class="cert-name">LinkedIn Marketing</span></div>
+      <div class="cert-item"><span class="cert-icon">📁</span><span class="cert-name">MS Office Master</span></div>
+      <div class="cert-item"><span class="cert-icon">🤝</span><span class="cert-name">Negotiation Professional</span></div>
+      <div class="cert-item"><span class="cert-icon">🔬</span><span class="cert-name">CITI Research</span></div>
+      <div class="cert-item"><span class="cert-icon">🏥</span><span class="cert-name">Naloxone Training</span></div>
+      <div class="cert-item"><span class="cert-icon">📋</span><span class="cert-name">Insurance Producer (WV)</span></div>
+      <div class="cert-item"><span class="cert-icon">📋</span><span class="cert-name">Insurance Producer (WA)</span></div>
+      <div class="cert-item"><span class="cert-icon">🌿</span><span class="cert-name">Medical Cannabis Specialist</span></div>
+      <div class="cert-item"><span class="cert-icon">⚗️</span><span class="cert-name">CO2 Extraction Certified</span></div>
+      <div class="cert-item"><span class="cert-icon">🧪</span><span class="cert-name">Short Path Distillation</span></div>
+      <div class="cert-item"><span class="cert-icon">🚨</span><span class="cert-name">ICS-100/200</span></div>
+      <div class="cert-item"><span class="cert-icon">🛡️</span><span class="cert-name">NIMS/NRF</span></div>
+      <!-- Duplicate for seamless scroll -->
+      <div class="cert-item"><span class="cert-icon">✈️</span><span class="cert-name">FAA Part 107</span></div>
+      <div class="cert-item"><span class="cert-icon">🛸</span><span class="cert-name">Transport Canada RPAS</span></div>
+      <div class="cert-item"><span class="cert-icon">📊</span><span class="cert-name">Google Analytics 4</span></div>
+      <div class="cert-item"><span class="cert-icon">🔍</span><span class="cert-name">Google Ads Search</span></div>
+      <div class="cert-item"><span class="cert-icon">🍎</span><span class="cert-name">Apple Search Ads</span></div>
+      <div class="cert-item"><span class="cert-icon">📱</span><span class="cert-name">HubSpot SEO I & II</span></div>
+      <div class="cert-item"><span class="cert-icon">📣</span><span class="cert-name">HubSpot Social Media</span></div>
+      <div class="cert-item"><span class="cert-icon">🦉</span><span class="cert-name">Hootsuite Platform</span></div>
+      <div class="cert-item"><span class="cert-icon">💼</span><span class="cert-name">LinkedIn Marketing</span></div>
+      <div class="cert-item"><span class="cert-icon">📁</span><span class="cert-name">MS Office Master</span></div>
+    </div>
+  </div>
+
+  <!-- Education Section -->
+  <section id="education" class="education-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">EDUCATION</span>
+        <h2 class="section-title">Academic Foundation</h2>
+        <p class="section-subtitle">Building expertise at the intersection of marketing, data science, and emerging technology</p>
+      </div>
+      
+      <div class="education-grid">
+        <div class="education-card current">
+          <div class="edu-icon">🎓</div>
+          <div class="edu-degree">Master of Science in AI Marketing</div>
+          <div class="edu-school">West Virginia University</div>
+          <div class="edu-date">Fall 2025 – Expected August 2026</div>
+          <div class="edu-focus">
+            <span class="edu-focus-tag">AI Consumer Behavior</span>
+            <span class="edu-focus-tag">CRM Systems</span>
+            <span class="edu-focus-tag">Strategic AI Communications</span>
+          </div>
+        </div>
+        
+        <div class="education-card">
+          <div class="edu-icon">📜</div>
+          <div class="edu-degree">Bachelor of Science in Integrated Marketing Communications</div>
+          <div class="edu-school">West Virginia University</div>
+          <div class="edu-date">Awarded May 2025 • GPA: 3.17</div>
+          <div class="edu-focus">
+            <span class="edu-focus-tag">Advertising</span>
+            <span class="edu-focus-tag">Public Relations</span>
+            <span class="edu-focus-tag">Digital Media</span>
+            <span class="edu-focus-tag">Social Media Strategy</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Coursework -->
+      <div class="coursework-section">
+        <div class="coursework-header">
+          <h3 class="coursework-title">Relevant Coursework</h3>
+          <div class="coursework-tabs">
+            <button class="coursework-tab active" onclick="showCourses('imc')">IMC/Advertising</button>
+            <button class="coursework-tab" onclick="showCourses('business')">Business</button>
+            <button class="coursework-tab" onclick="showCourses('technical')">Technical</button>
+            <button class="coursework-tab" onclick="showCourses('other')">Other</button>
+          </div>
+        </div>
+        
+        <div id="courses-imc" class="course-grid">
+          <div class="course-item"><span class="course-name">IMC Capstone</span><span class="course-grade grade-a">A</span></div>
+          <div class="course-item"><span class="course-name">Social Media Campaigns</span><span class="course-grade grade-a">A+</span></div>
+          <div class="course-item"><span class="course-name">Social Media Strategy</span><span class="course-grade grade-a">A</span></div>
+          <div class="course-item"><span class="course-name">Social Media Applications</span><span class="course-grade grade-a">A-</span></div>
+          <div class="course-item"><span class="course-name">Advertising Copywriting</span><span class="course-grade grade-a">A</span></div>
+          <div class="course-item"><span class="course-name">Media Planning/Strategy</span><span class="course-grade grade-a">A</span></div>
+          <div class="course-item"><span class="course-name">Audience Psychology</span><span class="course-grade grade-a">A-</span></div>
+          <div class="course-item"><span class="course-name">Audience Insights</span><span class="course-grade grade-b">B+</span></div>
+          <div class="course-item"><span class="course-name">Intro to Advertising & PR</span><span class="course-grade grade-b">B+</span></div>
+          <div class="course-item"><span class="course-name">Branded Content</span><span class="course-grade grade-b">B-</span></div>
+          <div class="course-item"><span class="course-name">IMC Principles</span><span class="course-grade grade-b">B</span></div>
+          <div class="course-item"><span class="course-name">Media & Society</span><span class="course-grade grade-b">B</span></div>
+          <div class="course-item"><span class="course-name">Media Writing</span><span class="course-grade grade-b">B</span></div>
+          <div class="course-item"><span class="course-name">Media Tools</span><span class="course-grade grade-b">B-</span></div>
+          <div class="course-item"><span class="course-name">Media Ethics and Law</span><span class="course-grade grade-c">C-</span></div>
+        </div>
+        
+        <div id="courses-business" class="course-grid" style="display:none;">
+          <div class="course-item"><span class="course-name">Business Ethics</span><span class="course-grade grade-a">A</span></div>
+          <div class="course-item"><span class="course-name">Principles of Marketing</span><span class="course-grade grade-b">B</span></div>
+          <div class="course-item"><span class="course-name">Marketing Research</span><span class="course-grade grade-b">B</span></div>
+          <div class="course-item"><span class="course-name">Principles of Accounting</span><span class="course-grade grade-cr">CR</span></div>
+          <div class="course-item"><span class="course-name">Introduction to Business</span><span class="course-grade grade-cr">CR</span></div>
+          <div class="course-item"><span class="course-name">Economics</span><span class="course-grade grade-cr">CR</span></div>
+        </div>
+        
+        <div id="courses-technical" class="course-grid" style="display:none;">
+          <div class="course-item"><span class="course-name">Digital Earth and GIS Lab</span><span class="course-grade grade-a">A</span></div>
+          <div class="course-item"><span class="course-name">Intro Computer Applications</span><span class="course-grade grade-a">A</span></div>
+          <div class="course-item"><span class="course-name">Digital Earth and GIS</span><span class="course-grade grade-b">B</span></div>
+          <div class="course-item"><span class="course-name">Understanding Statistics</span><span class="course-grade grade-b">B</span></div>
+          <div class="course-item"><span class="course-name">Intro-Computer Info Systems</span><span class="course-grade grade-cr">CR</span></div>
+          <div class="course-item"><span class="course-name">Applied Calculus</span><span class="course-grade grade-cr">CR</span></div>
+          <div class="course-item"><span class="course-name">Calculus</span><span class="course-grade grade-cr">CR</span></div>
+          <div class="course-item"><span class="course-name">Honors Research</span><span class="course-grade grade-c">C</span></div>
+        </div>
+        
+        <div id="courses-other" class="course-grid" style="display:none;">
+          <div class="course-item"><span class="course-name">Intro-Women's/Gender Studies</span><span class="course-grade grade-a">A</span></div>
+          <div class="course-item"><span class="course-name">Hip Hop Nation</span><span class="course-grade grade-a">A-</span></div>
+          <div class="course-item"><span class="course-name">Comp., Rhetoric, & Research</span><span class="course-grade grade-b">B-</span></div>
+          <div class="course-item"><span class="course-name">Growth-American Nation</span><span class="course-grade grade-c">C+</span></div>
+          <div class="course-item"><span class="course-name">Military Science (ROTC)</span><span class="course-grade grade-cr">CR</span></div>
+          <div class="course-item"><span class="course-name">Basic Training</span><span class="course-grade grade-cr">CR</span></div>
+          <div class="course-item"><span class="course-name">Intro to Sociology</span><span class="course-grade grade-c">C</span></div>
+          <div class="course-item"><span class="course-name">Intro. Composition & Rhetoric</span><span class="course-grade grade-c">C</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="certifications" class="certs-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">CERTIFICATIONS</span>
+        <h2 class="section-title">Professional Credentials</h2>
+        <p class="section-subtitle">35+ industry certifications spanning drone operations, digital marketing, and specialized sciences</p>
+      </div>
+      
+      <div class="certs-categories">
+        <!-- Drone Operations -->
+        <div class="cert-category">
+          <div class="cert-category-header">
+            <div class="cert-category-icon">🛸</div>
+            <div>
+              <div class="cert-category-title">Drone Operations & GIS</div>
+              <div class="cert-category-count">2 Certifications</div>
+            </div>
+          </div>
+          <div class="cert-list">
+            <div class="cert-card">
+              <div class="cert-card-icon">✈️</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">FAA Part 107: Small UAS Pilot</div>
+                <div class="cert-card-issuer">Federal Aviation Administration</div>
+              </div>
+              <div class="cert-card-date">Mar 2021</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🇨🇦</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">RPAS Pilot (Advanced/Basic)</div>
+                <div class="cert-card-issuer">Transport Canada</div>
+              </div>
+              <div class="cert-card-date">Feb 2024</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Digital Marketing -->
+        <div class="cert-category">
+          <div class="cert-category-header">
+            <div class="cert-category-icon">📊</div>
+            <div>
+              <div class="cert-category-title">Digital Marketing & Analytics</div>
+              <div class="cert-category-count">9 Certifications</div>
+            </div>
+          </div>
+          <div class="cert-list">
+            <div class="cert-card">
+              <div class="cert-card-icon">📈</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Google Analytics 4 Certification</div>
+                <div class="cert-card-issuer">Google</div>
+              </div>
+              <div class="cert-card-date">Nov 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🔍</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Google Ads Search Certification</div>
+                <div class="cert-card-issuer">Google</div>
+              </div>
+              <div class="cert-card-date">Dec 2023</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🍎</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Apple Search Ads Certification</div>
+                <div class="cert-card-issuer">Apple</div>
+              </div>
+              <div class="cert-card-date">Jan 2025</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">💼</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Certified Marketing Insider</div>
+                <div class="cert-card-issuer">LinkedIn</div>
+              </div>
+              <div class="cert-card-date">Jun 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🦉</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Hootsuite Platform Certification</div>
+                <div class="cert-card-issuer">Hootsuite</div>
+              </div>
+              <div class="cert-card-date">Oct 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🔎</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">SEO I & II</div>
+                <div class="cert-card-issuer">HubSpot</div>
+              </div>
+              <div class="cert-card-date">Oct 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">📱</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Social Media Marketing I & II</div>
+                <div class="cert-card-issuer">HubSpot</div>
+              </div>
+              <div class="cert-card-date">Oct 2024</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Professional Skills -->
+        <div class="cert-category">
+          <div class="cert-category-header">
+            <div class="cert-category-icon">💼</div>
+            <div>
+              <div class="cert-category-title">Professional & Insurance</div>
+              <div class="cert-category-count">4 Certifications</div>
+            </div>
+          </div>
+          <div class="cert-list">
+            <div class="cert-card">
+              <div class="cert-card-icon">📁</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Microsoft Office Specialist: Master</div>
+                <div class="cert-card-issuer">Microsoft</div>
+              </div>
+              <div class="cert-card-date">Mar 2021</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🤝</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Negotiation Professional</div>
+                <div class="cert-card-issuer">American Negotiation Institute</div>
+              </div>
+              <div class="cert-card-date">Aug 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">📋</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Insurance Producer (Accident/Health/Life)</div>
+                <div class="cert-card-issuer">West Virginia</div>
+              </div>
+              <div class="cert-card-date">Aug 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">📋</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Insurance Producer (Life, Disability)</div>
+                <div class="cert-card-issuer">Washington State</div>
+              </div>
+              <div class="cert-card-date">Aug 2024</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Medical Cannabis -->
+        <div class="cert-category">
+          <div class="cert-category-header">
+            <div class="cert-category-icon">🌿</div>
+            <div>
+              <div class="cert-category-title">Medical Cannabis Specialization</div>
+              <div class="cert-category-count">5 Certifications</div>
+            </div>
+          </div>
+          <div class="cert-list">
+            <div class="cert-card">
+              <div class="cert-card-icon">🏥</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Cannabis, Chronic Pain, and Related Disorders</div>
+                <div class="cert-card-issuer">University of Colorado</div>
+              </div>
+              <div class="cert-card-date">Oct 2023</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🧠</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Cannabis, Mental Health, and Brain Disorders</div>
+                <div class="cert-card-issuer">University of Colorado</div>
+              </div>
+              <div class="cert-card-date">Oct 2023</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">👴</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Healthy Aging and the Future of Cannabis</div>
+                <div class="cert-card-issuer">University of Colorado</div>
+              </div>
+              <div class="cert-card-date">Oct 2023</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">📚</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">History of Medical Cannabis</div>
+                <div class="cert-card-issuer">University of Colorado</div>
+              </div>
+              <div class="cert-card-date">Oct 2023</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🎓</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Specialization in Medical Cannabis</div>
+                <div class="cert-card-issuer">University of Colorado</div>
+              </div>
+              <div class="cert-card-date">Oct 2023</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CO2 Extraction -->
+        <div class="cert-category">
+          <div class="cert-category-header">
+            <div class="cert-category-icon">⚗️</div>
+            <div>
+              <div class="cert-category-title">CO2 Extraction System Training</div>
+              <div class="cert-category-count">4 Certifications</div>
+            </div>
+          </div>
+          <div class="cert-list">
+            <div class="cert-card">
+              <div class="cert-card-icon">🔧</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">2000-20LD "Transformer" CO2 Extraction System</div>
+                <div class="cert-card-issuer">Apeks Supercritical</div>
+              </div>
+              <div class="cert-card-date">Feb 2020</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🧪</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Certified Short Path Distillation Technician</div>
+                <div class="cert-card-issuer">Apeks Supercritical</div>
+              </div>
+              <div class="cert-card-date">Feb 2020</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">📖</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Extraction Theory</div>
+                <div class="cert-card-issuer">Apeks Supercritical</div>
+              </div>
+              <div class="cert-card-date">Feb 2020</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">⚙️</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Pre & Post Processing Techniques</div>
+                <div class="cert-card-issuer">Apeks Supercritical</div>
+              </div>
+              <div class="cert-card-date">Feb 2020</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Emergency Management -->
+        <div class="cert-category">
+          <div class="cert-category-header">
+            <div class="cert-category-icon">🚨</div>
+            <div>
+              <div class="cert-category-title">Emergency Management (FEMA/EMI)</div>
+              <div class="cert-category-count">6 Certifications</div>
+            </div>
+          </div>
+          <div class="cert-list">
+            <div class="cert-card">
+              <div class="cert-card-icon">☢️</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">IS-00005.a: Intro to Hazardous Materials</div>
+                <div class="cert-card-issuer">EMI • 1.00 CEU</div>
+              </div>
+              <div class="cert-card-date">Aug 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🎖️</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">IS-00100.c: Intro to ICS (ICS-100)</div>
+                <div class="cert-card-issuer">EMI • 0.20 CEU</div>
+              </div>
+              <div class="cert-card-date">Jun 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🎖️</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">IS-00200.c: Basic ICS (ICS-200)</div>
+                <div class="cert-card-issuer">EMI • 0.40 CEU</div>
+              </div>
+              <div class="cert-card-date">Aug 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🛡️</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">IS-00700.b: Intro to NIMS</div>
+                <div class="cert-card-issuer">EMI • 0.40 CEU</div>
+              </div>
+              <div class="cert-card-date">Aug 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">📦</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">IS-00703.b: NIMS Resource Management</div>
+                <div class="cert-card-issuer">EMI • 0.40 CEU</div>
+              </div>
+              <div class="cert-card-date">Aug 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">🏛️</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">IS-00800.d: National Response Framework</div>
+                <div class="cert-card-issuer">EMI • 0.30 CEU</div>
+              </div>
+              <div class="cert-card-date">Aug 2024</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Health & Safety -->
+        <div class="cert-category">
+          <div class="cert-category-header">
+            <div class="cert-category-icon">🏥</div>
+            <div>
+              <div class="cert-category-title">Health & Safety</div>
+              <div class="cert-category-count">2 Certifications</div>
+            </div>
+          </div>
+          <div class="cert-list">
+            <div class="cert-card">
+              <div class="cert-card-icon">🔬</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Responsible Conduct of Research (Score: 96)</div>
+                <div class="cert-card-issuer">CITI Program / WVU</div>
+              </div>
+              <div class="cert-card-date">Mar 2024</div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-card-icon">💊</div>
+              <div class="cert-card-info">
+                <div class="cert-card-name">Naloxone Training</div>
+                <div class="cert-card-issuer">WVDII</div>
+              </div>
+              <div class="cert-card-date">Sep 2023</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="experience-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">EXPERIENCE</span>
+        <h2 class="section-title">Professional Journey</h2>
+        <p class="section-subtitle">From drone operations to digital marketing strategy</p>
+      </div>
+      
+      <div class="experience-timeline">
+        <div class="experience-item">
+          <div class="exp-header">
+            <div>
+              <div class="exp-title">Research Apprentice</div>
+              <div class="exp-company">WVU Integrated Construction Informatics Lab</div>
+            </div>
+            <div class="exp-meta">
+              <div class="exp-date">Jan 2024 – Present</div>
+              <div class="exp-location">Morgantown, WV</div>
+            </div>
+          </div>
+          <div class="exp-description">
+            <div class="exp-bullet">Spearheaded integration of drone-captured LiDAR data into immersive VR/AR environments, creating real-time interactive models for remote industrial inspection</div>
+            <div class="exp-bullet">Translated detailed 3D maps into virtual reality platforms for interactive analysis, enhancing remote inspection capabilities in construction informatics</div>
+            <div class="exp-bullet">Applied advanced mathematical modeling to improve inspection accuracy and contribute to safety sustainability research</div>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">LiDAR</span>
+            <span class="exp-tag">VR/AR</span>
+            <span class="exp-tag">3D Modeling</span>
+            <span class="exp-tag">Construction Informatics</span>
+          </div>
+        </div>
+        
+        <div class="experience-item">
+          <div class="exp-header">
+            <div>
+              <div class="exp-title">Drone Pilot & Founder</div>
+              <div class="exp-company">ELEVATED IMAGING LLC • Zeitview • CBRE • Site Technologies</div>
+            </div>
+            <div class="exp-meta">
+              <div class="exp-date">Jan 2021 – Present</div>
+              <div class="exp-location">Remote / Hybrid</div>
+            </div>
+          </div>
+          <div class="exp-description">
+            <div class="exp-bullet">Established LLC "ELEVATED IMAGING" in August 2021 and accumulated over 250 hours of professional flight time</div>
+            <div class="exp-bullet">Specialize in Aerial LiDAR mapping and perform detailed inspections for enterprise clients including Zeitview, CBRE, and Site Technologies</div>
+            <div class="exp-bullet">Utilize CAD and GIS software to process complex topographical data for engineering and real estate compliance</div>
+            <div class="exp-bullet">Develop strategic flight plans to optimize data collection and ensure high-fidelity outputs</div>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">FAA Part 107</span>
+            <span class="exp-tag">LiDAR Mapping</span>
+            <span class="exp-tag">CAD</span>
+            <span class="exp-tag">GIS</span>
+            <span class="exp-tag">Enterprise Clients</span>
+          </div>
+        </div>
+        
+        <div class="experience-item">
+          <div class="exp-header">
+            <div>
+              <div class="exp-title">Media Consultant</div>
+              <div class="exp-company">Prospect & Price Creative</div>
+            </div>
+            <div class="exp-meta">
+              <div class="exp-date">Aug 2023 – May 2024</div>
+              <div class="exp-location">Morgantown, WV</div>
+            </div>
+          </div>
+          <div class="exp-description">
+            <div class="exp-bullet">Developed and executed strategic marketing plans leveraging digital, print, and video channels for local businesses</div>
+            <div class="exp-bullet">Managed end-to-end marketing campaigns with data-backed market research to optimize spend</div>
+            <div class="exp-bullet">Ensured all campaigns adhered to strict advertising regulations and ethical standards</div>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Marketing Strategy</span>
+            <span class="exp-tag">Digital Marketing</span>
+            <span class="exp-tag">Campaign Management</span>
+            <span class="exp-tag">Analytics</span>
+          </div>
+        </div>
+        
+        <div class="experience-item">
+          <div class="exp-header">
+            <div>
+              <div class="exp-title">Graduation Photographer</div>
+              <div class="exp-company">Balfour & Co.</div>
+            </div>
+            <div class="exp-meta">
+              <div class="exp-date">Oct 2021 – Present</div>
+              <div class="exp-location">Various Locations</div>
+            </div>
+          </div>
+          <div class="exp-description">
+            <div class="exp-bullet">Photographed over 16,000 graduates at more than 35 ceremonies</div>
+            <div class="exp-bullet">Managed high-volume, high-pressure photography operations with precision timing</div>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">Photography</span>
+            <span class="exp-tag">Event Management</span>
+            <span class="exp-tag">High Volume</span>
+          </div>
+        </div>
+        
+        <div class="experience-item">
+          <div class="exp-header">
+            <div>
+              <div class="exp-title">Short Path Distillation & Extraction Technician</div>
+              <div class="exp-company">Mountaineer Green Ventures</div>
+            </div>
+            <div class="exp-meta">
+              <div class="exp-date">Aug 2019 – Nov 2023</div>
+              <div class="exp-location">West Virginia</div>
+            </div>
+          </div>
+          <div class="exp-description">
+            <div class="exp-bullet">Specialized in cannabis extraction processes using CO2 extraction systems</div>
+            <div class="exp-bullet">Managed rotary evaporation and employed Faulkner lipid filtration techniques</div>
+            <div class="exp-bullet">Preserved terpenes using distillation and cold trapping methods</div>
+          </div>
+          <div class="exp-tags">
+            <span class="exp-tag">CO2 Extraction</span>
+            <span class="exp-tag">Short Path Distillation</span>
+            <span class="exp-tag">Lab Techniques</span>
+            <span class="exp-tag">Quality Control</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">PROJECTS</span>
+        <h2 class="section-title">Case Studies & Work</h2>
+        <p class="section-subtitle">AI-driven solutions, academic projects, and creative ventures</p>
+      </div>
+      
+      <!-- Featured Project -->
+      <div class="featured-project">
+        <span class="featured-badge">★ FEATURED CASE STUDY</span>
+        <h3 class="featured-title">Abel Insurance Group</h3>
+        <p class="featured-subtitle">AI Consulting Projects (MKTG 510) — Solving the "Perception Gap"</p>
+        
+        <div class="featured-stats">
+          <div>
+            <div class="featured-stat-value">25M+</div>
+            <div class="featured-stat-label">Sources Crawled</div>
+          </div>
+          <div>
+            <div class="featured-stat-value">200</div>
+            <div class="featured-stat-label">Posts Analyzed</div>
+          </div>
+          <div>
+            <div class="featured-stat-value">4</div>
+            <div class="featured-stat-label">Segments Identified</div>
+          </div>
+          <div>
+            <div class="featured-stat-value">28x</div>
+            <div class="featured-stat-label">FB vs IG Engagement</div>
+          </div>
+        </div>
+        
+        <div class="project-phases">
+          <div class="project-phase">
+            <div class="phase-number">01</div>
+            <div class="phase-content">
+              <h4 class="phase-title">Bot-Driven Social Listening (Unit 2)</h4>
+              <p class="phase-text">Deployed Brand24 crawler bots to analyze social media mentions across 25M+ web sources. Implemented Topic Modeling to identify rising keywords for a "Newsjacking" Strategy.</p>
+            </div>
+          </div>
+          
+          <div class="project-phase">
+            <div class="phase-number">02</div>
+            <div class="phase-content">
+              <h4 class="phase-title">Sentiment & Segmentation Analysis (Unit 3)</h4>
+              <p class="phase-text">Used NLP models to scan 200 Instagram posts, identifying the "Neutrality Trap" in educational content. Clustered audience into four behavioral segments: Silent Supporters, High Engagement Advocates, and more.</p>
+            </div>
+          </div>
+          
+          <div class="project-phase">
+            <div class="phase-number">03</div>
+            <div class="phase-content">
+              <h4 class="phase-title">The Brand Report (Unit 4)</h4>
+              <p class="phase-text">Final report quantifying "Zero Direct Online Mentions" and "250 Lost Policy Quotes Monthly." Revealed statistically significant finding: "Facebook Drives 28x More Engagement Than Instagram."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Projects Grid -->
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">👟</div>
+            <span class="project-tag">IMC CAPSTONE</span>
+          </div>
+          <h4 class="project-card-title">WV Kicks IMC Plan</h4>
+          <p class="project-card-text">Comprehensive 70-page IMC Capstone plan built around "Every Sneaker Has a Story." Included SWOT analysis, competitive analysis, Explorer/Creator archetypes, and TV/OOH media strategies.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">IMC 459</span>
+            <span class="project-card-tag">Grade: A</span>
+            <span class="project-card-tag">70 Pages</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🏋️</div>
+            <span class="project-tag">GO-TO-MARKET</span>
+          </div>
+          <h4 class="project-card-title">FlexTrack Smart Bands</h4>
+          <p class="project-card-text">Full product launch strategy for AI-enabled fitness hardware. Created "Pulse Loop" brand identity with psychological trigger mapping for user retention.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">AI Form Correction</span>
+            <span class="project-card-tag">Launch Framework</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🎮</div>
+            <span class="project-tag">NLP ANALYSIS</span>
+          </div>
+          <h4 class="project-card-title">Logitech Sentiment Analysis</h4>
+          <p class="project-card-text">MKTG 435 analysis on Logitech G PRO X SUPERLIGHT 2. Observed positive sentiment driven by 60g weight and precise sensor. Identified durability as primary churn risk.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">NLP</span>
+            <span class="project-card-tag">Consumer Insights</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🧮</div>
+            <span class="project-tag">MACHINE LEARNING</span>
+          </div>
+          <h4 class="project-card-title">K-Means Clustering Assignment</h4>
+          <p class="project-card-text">Applied k-means clustering for customer segmentation and k-NN algorithm for nearest-neighbor analysis based on movie ratings. Built algorithm from scratch.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">MKTG 435</span>
+            <span class="project-card-tag">Python</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🐕</div>
+            <span class="project-tag">SOCIAL MEDIA</span>
+          </div>
+          <h4 class="project-card-title">Goodbois Marketing Plan</h4>
+          <p class="project-card-text">MKTG 475 social media marketing plan for regional pet store seeking 20% increase in online sales using Instagram, Facebook, and Pinterest.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">Social Strategy</span>
+            <span class="project-card-tag">20% Growth Target</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🥽</div>
+            <span class="project-tag">RESEARCH</span>
+          </div>
+          <h4 class="project-card-title">VR in Business & Digital Transformation</h4>
+          <p class="project-card-text">JRL 432 research on VR/AR marketing applications including Volvo's virtual test-drive and IKEA's VR app for home furnishing visualization.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">VR/AR</span>
+            <span class="project-card-tag">Digital Transformation</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🍪</div>
+            <span class="project-tag">ADVERTISING</span>
+          </div>
+          <h4 class="project-card-title">Crumbl Cookie Campaign</h4>
+          <p class="project-card-text">ADV 315S campaign strategy "Cookies: Reimagined" emphasizing rotating flavors and pink box trademark across traditional and digital media.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">Copywriting</span>
+            <span class="project-card-tag">Creative Strategy</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">👀</div>
+            <span class="project-tag">BEHAVIORAL</span>
+          </div>
+          <h4 class="project-card-title">Abel Insurance Observational Study</h4>
+          <p class="project-card-text">ADPR 421S research using auditory cues to analyze how clients make renewal decisions. Provided strategy recommendations based on observed patterns.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">Audience Insights</span>
+            <span class="project-card-tag">Qualitative Research</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🌿</div>
+            <span class="project-tag">BUSINESS PLAN</span>
+          </div>
+          <h4 class="project-card-title">Heritage Bloom</h4>
+          <p class="project-card-text">Investor-ready cannabis business plan with AI-Driven Marketing Plan focusing on compliance-aware AI content and campaign automation.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">Business Strategy</span>
+            <span class="project-card-tag">AI Marketing</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🎮</div>
+            <span class="project-tag">DEVELOPMENT</span>
+          </div>
+          <h4 class="project-card-title">The Vance Occupant Game</h4>
+          <p class="project-card-text">Interactive text-based horror adventure game with branching narrative design, built using Python/JS text-adventure logic.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">Python</span>
+            <span class="project-card-tag">JavaScript</span>
+            <span class="project-card-tag">Game Design</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🤖</div>
+            <span class="project-tag">AI ENGINEERING</span>
+          </div>
+          <h4 class="project-card-title">Local LLM Setup & Fine-Tuning</h4>
+          <p class="project-card-text">Created custom conversational assistant for marketing workflows with local deployment and fine-tuning capabilities.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">LLM</span>
+            <span class="project-card-tag">Fine-Tuning</span>
+            <span class="project-card-tag">Automation</span>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-card-icon">🎨</div>
+            <span class="project-tag">CREATIVE AI</span>
+          </div>
+          <h4 class="project-card-title">Stable Diffusion Pipeline</h4>
+          <p class="project-card-text">Established AI-generated asset and automation pipeline for branding and campaigns using Stable Diffusion.</p>
+          <div class="project-card-tags">
+            <span class="project-card-tag">Stable Diffusion</span>
+            <span class="project-card-tag">Asset Generation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="skills-section">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag">SKILLS</span>
+        <h2 class="section-title">Technical Proficiency</h2>
+        <p class="section-subtitle">Data science, marketing technology, and specialized operations</p>
+      </div>
+      
+      <div class="skills-container">
+        <div class="skills-column">
+          <h3>AI & Data Science</h3>
+          <div class="skill-bars">
+            <div class="skill-bar-item">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">Python</span>
+                <span class="skill-bar-value">90%</span>
+              </div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 90%"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">R</span>
+                <span class="skill-bar-value">85%</span>
+              </div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 85%"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">SPSS / SAS</span>
+                <span class="skill-bar-value">80%</span>
+              </div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 80%"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">Tableau</span>
+                <span class="skill-bar-value">85%</span>
+              </div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 85%"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">LLM / Prompt Engineering</span>
+                <span class="skill-bar-value">92%</span>
+              </div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 92%"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">K-Means / Clustering</span>
+                <span class="skill-bar-value">85%</span>
+              </div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 85%"></div></div>
+            </div>
+            <div class="skill-bar-item">
+              <div class="skill-bar-header">
+                <span class="skill-bar-name">NLP / Sentiment Analysis</span>
+                <span class="skill-bar-value">88%</span>
+              </div>
+              <div class="skill-bar-track"><div class="skill-bar-fill" style="width: 88%"></div></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="skills-column">
+          <h3>Marketing & Technology</h3>
+          <div class="skill-tags-grid">
+            <span class="skill-tag-item">Google Analytics 4</span>
+            <span class="skill-tag-item">Google Ads</span>
+            <span class="skill-tag-item">Apple Search Ads</span>
+            <span class="skill-tag-item">HubSpot CRM</span>
+            <span class="skill-tag-item">Salesforce</span>
+            <span class="skill-tag-item">Hootsuite</span>
+            <span class="skill-tag-item">SEO / SEM</span>
+            <span class="skill-tag-item">Programmatic Ads</span>
+            <span class="skill-tag-item">Brand24</span>
+            <span class="skill-tag-item">Social Listening</span>
+            <span class="skill-tag-item">VR/AR Integration</span>
+            <span class="skill-tag-item">LiDAR Mapping</span>
+            <span class="skill-tag-item">CAD Software</span>
+            <span class="skill-tag-item">GIS Platforms</span>
+            <span class="skill-tag-item">Unity</span>
+            <span class="skill-tag-item">3D Modeling</span>
+            <span class="skill-tag-item">Stable Diffusion</span>
+            <span class="skill-tag-item">Local LLM Setup</span>
+            <span class="skill-tag-item">MS Office Suite</span>
+            <span class="skill-tag-item">Adobe Creative</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Specializations -->
+      <div class="specializations-grid">
+        <div class="spec-card">
+          <div class="spec-icon">🛸</div>
+          <h4 class="spec-title">Licensed Drone Pilot</h4>
+          <p class="spec-text">FAA Part 107 & Transport Canada RPAS certified. 250+ flight hours conducting precision LiDAR surveys and 3D mapping for enterprise clients.</p>
+        </div>
+        <div class="spec-card">
+          <div class="spec-icon">🥽</div>
+          <h4 class="spec-title">VR/AR Integration</h4>
+          <p class="spec-text">Translating drone-captured LiDAR data into immersive VR/AR environments for industrial inspection and construction informatics.</p>
+        </div>
+        <div class="spec-card">
+          <div class="spec-icon">🧠</div>
+          <h4 class="spec-title">AI & LLM Engineering</h4>
+          <p class="spec-text">Local LLM deployment, fine-tuning, prompt chain development, and Stable Diffusion pipelines for marketing workflows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="section-inner">
+      <div class="contact-container">
+        <div class="contact-info">
+          <span class="section-tag">CONTACT</span>
+          <h2>Let's Build Something Extraordinary</h2>
+          <p>Looking for roles where I can deploy AI agents, optimize prompt frameworks, and build data-driven marketing engines.</p>
+          
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-item-icon">📍</div>
+              <div>
+                <div class="contact-item-label">Location</div>
+                <div class="contact-item-value">Morgantown, WV</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">✉️</div>
+              <div>
+                <div class="contact-item-label">Email</div>
+                <div class="contact-item-value"><a href="/cdn-cgi/l/email-protection#d4b5b0b5a6ada1a794b9b5bdb8fab7bbb9"><span class="__cf_email__" data-cfemail="abcacfcad9d2ded8ebc6cac2c785c8c4c6">[email&#160;protected]</span></a></div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">📱</div>
+              <div>
+                <div class="contact-item-label">Phone</div>
+                <div class="contact-item-value"><a href="tel:+13042907713">(304) 290-7713</a></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="contact-links">
+            <a href="https://linkedin.com/in/adaryus" class="contact-link" target="_blank">💼</a>
+            <a href="https://github.com/adaryusg" class="contact-link" target="_blank">💻</a>
+            <a href="https://adaryus.com" class="contact-link" target="_blank">🌐</a>
+          </div>
+        </div>
+        
+        <div class="contact-visual">
+          <h3 class="contact-cta-title">Ready to collaborate?</h3>
+          <p class="contact-cta-text">I'm currently open to new opportunities in AI marketing, data science applications, and spatial computing integration. Let's discuss how my unique blend of technical operations and strategic marketing can drive results for your organization.</p>
+          <a href="resume.pdf" class="contact-cta-btn">
+            <span>↓</span> Download Full Resume
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">◈</div>
+        <span class="logo-text" style="font-size:16px;">ADARYUS</span>
+      </div>
+      <div class="footer-text">AI-Augmented Strategist • M.S. AI Marketing @ WVU</div>
+      <div class="footer-ethics">Committed to ethical AI implementation and regulatory compliance</div>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Navigation scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    
+    // Generate particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 5 + 's';
+      particle.style.animationDuration = (4 + Math.random() * 4) + 's';
+      particlesContainer.appendChild(particle);
+    }
+    
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+    
+    // Coursework tabs
+    function showCourses(category) {
+      document.querySelectorAll('[id^="courses-"]').forEach(el => el.style.display = 'none');
+      document.getElementById('courses-' + category).style.display = 'grid';
+      document.querySelectorAll('.coursework-tab').forEach(tab => tab.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+    
+    // Active nav link
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+      document.querySelec
